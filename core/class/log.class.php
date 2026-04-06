@@ -223,6 +223,15 @@ class log extends AbstractLogger {
 			self::clear($_log);
 			return;
 		}
+		foreach (plugin::listPlugin(true) as $plugin) {
+			$plugin_id = $plugin->getId();
+			if (method_exists($plugin_id, 'logProtect')) {
+				if (in_array($_log, $plugin_id::logProtect(), true)) {
+					self::clear($_log);
+					return;
+				}
+			}
+		}
 		if (self::authorizeClearLog($_log)) {
 			$path = self::getPathToLog($_log);
 			com_shell::execute(system::getCmdSudo() . 'chmod 664 ' . $path . ' > /dev/null 2>&1;' . system::getCmdSudo() . 'chown -R ' . system::get('www-uid') . ':' . system::get('www-gid') . ' ' . $path . ' > /dev/null 2>&1;' . system::getCmdSudo() . ' cat /dev/null > ' . $path . ';rm ' . $path . ' 2>&1 > /dev/null');
