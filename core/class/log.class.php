@@ -219,17 +219,36 @@ class log extends AbstractLogger {
 			self::clear($_log);
 			return;
 		}
-		if (endsWith($_log, 'd') || endsWith($_log, 'd_1') || endsWith($_log, 'd_2') || endsWith($_log, 'd_3')) {
-			self::clear($_log);
-			return;
+		static $activePlugins = null;
+		if ($activePlugins === null) {
+			// TODO: si un nouveau log core est ajouté dans le codebase, l'ajouter ici pour éviter qu'un plugin homonyme ne le protège par erreur.
+			$coreLogNames = [
+				'api', 'apipro', 'backup', 'cmd', 'connection', 'cron', 'debug_translate',
+				'design', 'event', 'expression', 'history', 'http.com', 'interact', 'jeedom',
+				'jeedomAlert', 'jeeEvent', 'listener', 'market', 'monitoring_cloud', 'network',
+				'plugin', 'queue', 'report', 'scenario', 'starting', 'tts', 'update',
+			];
+			$activePlugins = [];
+			foreach (plugin::listPlugin(true) as $plugin) {
+				$plugin_id = $plugin->getId();
+				if (!in_array($plugin_id, $coreLogNames)) {
+					$activePlugins[] = [
+						'id'        => $plugin_id,
+						'hasDaemon' => ($plugin->getHasOwnDeamon() == 1),
+					];
+				}
+			}
+			usort($activePlugins, function ($a, $b) {
+				return strlen($b['id']) - strlen($a['id']);
+			});
 		}
-		foreach (plugin::listPlugin(true) as $plugin) {
-			$plugin_id = $plugin->getId();
-			if (method_exists($plugin_id, 'logProtect')) {
-				if (in_array($_log, $plugin_id::logProtect(), true)) {
+		foreach ($activePlugins as $plugin) {
+			if (strpos($_log, $plugin['id']) === 0) {
+				if ($_log !== $plugin['id'] && $plugin['hasDaemon']) {
 					self::clear($_log);
 					return;
 				}
+				break;
 			}
 		}
 		if (self::authorizeClearLog($_log)) {
