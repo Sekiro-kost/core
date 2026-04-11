@@ -187,16 +187,15 @@ class log extends AbstractLogger {
 	/**
 	 * Check authorisation to emptying log file
 	 */
-	public static function authorizeClearLog($_log, $_subPath = '') {
+	public static function authorizeClearLog(string $_log, string $_subPath = ''): bool {
 		$path = self::getPathToLog($_subPath . $_log);
-		return !((strpos($_log, '.htaccess') !== false)
-			|| (!file_exists($path) || !is_file($path)));
+		return !((strpos($_log, '.htaccess') !== false) || (!file_exists($path) || !is_file($path)));
 	}
 
 	/**
 	 * Empty log file
 	 */
-	public static function clear($_log) {
+	public static function clear(string $_log) {
 		if (self::authorizeClearLog($_log)) {
 			$path = self::getPathToLog($_log);
 			com_shell::execute(system::getCmdSudo() . 'chmod 664 ' . $path . '> /dev/null 2>&1;' . system::getCmdSudo() . 'chown -R ' . system::get('www-uid') . ':' . system::get('www-gid') . ' ' . $path . ' > /dev/null 2>&1;' . system::getCmdSudo() . ' cat /dev/null > ' . $path);
@@ -205,66 +204,106 @@ class log extends AbstractLogger {
 		return;
 	}
 
-	public static function clearAll() {
+	public static function clearAll(): void {
 		foreach (ls(self::getPathToLog(''), '*', false, array('files')) as $log)
 			self::clear($log);
+		return;
+	}
+
+	private static function getActiveDaemonPluginIdsSortedByLength(): array {
+		static $activePluginsWithDaemon = null;
+		if ($activePluginsWithDaemon === null) {
+			$activePluginsWithDaemon = [];
+			foreach (plugin::listPlugin(true) as $plugin) {
+				if ($plugin->getHasOwnDeamon() == 0) continue;
+				$activePluginsWithDaemon[] = $plugin->getId();
+			}
+			usort($activePluginsWithDaemon, function ($a, $b) {
+				return strlen($b) - strlen($a);
+			});
+		}
+
+		return $activePluginsWithDaemon;
+	}
+
+	private static function canRemoveLog(string $_log): bool {
+		if (strpos($_log, 'nginx.error') !== false || strpos($_log, 'http.error') !== false) {
+			return false;
+		}
+
+		if (substr($_log, -9) === '_packages' || substr($_log, -7) === '_update') {
+			return true;
+		}
+
+		// if a new core log is added to the codebase, add it here to prevent a plugin with the same name from protecting it by mistake.
+		static $coreLogNames = [
+			'api',
+			'apipro',
+			'backup',
+			'cmd',
+			'connection',
+			'cron',
+			'cron_execution',
+			'debug_translate',
+			'design',
+			'event',
+			'expression',
+			'history',
+			'http.com',
+			'interact',
+			'jeedom',
+			'jeedomAlert',
+			'jeeEvent',
+			'listener',
+			'listener_execution',
+			'market',
+			'monitoring_cloud',
+			'network',
+			'plugin',
+			'queue',
+			'report',
+			'scenario',
+			'starting',
+			'tts',
+			'update',
+		];
+		if (in_array($_log, $coreLogNames)) {
+			return true;
+		}
+
+		$plugins = self::getActiveDaemonPluginIdsSortedByLength();
+		foreach ($plugins as $plugin) {
+			if (strpos($_log, $plugin) === 0) {
+				if ($_log !== $plugin) {
+					return false;
+				}
+				return true;
+			}
+		}
+
 		return true;
 	}
 
 	/**
 	 * Delete log file
 	 */
-	public static function remove($_log) {
-		if (strpos($_log, 'nginx.error') !== false || strpos($_log, 'http.error') !== false) {
+	public static function remove(string $_log) {
+		if (!self::canRemoveLog($_log)) {
 			self::clear($_log);
 			return;
 		}
-		static $activePlugins = null;
-		if ($activePlugins === null) {
-			// TODO: si un nouveau log core est ajouté dans le codebase, l'ajouter ici pour éviter qu'un plugin homonyme ne le protège par erreur.
-			$coreLogNames = [
-				'api', 'apipro', 'backup', 'cmd', 'connection', 'cron', 'debug_translate',
-				'design', 'event', 'expression', 'history', 'http.com', 'interact', 'jeedom',
-				'jeedomAlert', 'jeeEvent', 'listener', 'market', 'monitoring_cloud', 'network',
-				'plugin', 'queue', 'report', 'scenario', 'starting', 'tts', 'update',
-			];
-			$activePlugins = [];
-			foreach (plugin::listPlugin(true) as $plugin) {
-				$plugin_id = $plugin->getId();
-				if (!in_array($plugin_id, $coreLogNames)) {
-					$activePlugins[] = [
-						'id'        => $plugin_id,
-						'hasDaemon' => ($plugin->getHasOwnDeamon() == 1),
-					];
-				}
-			}
-			usort($activePlugins, function ($a, $b) {
-				return strlen($b['id']) - strlen($a['id']);
-			});
-		}
-		foreach ($activePlugins as $plugin) {
-			if (strpos($_log, $plugin['id']) === 0) {
-				if ($_log !== $plugin['id'] && $plugin['hasDaemon']) {
-					self::clear($_log);
-					return;
-				}
-				break;
-			}
-		}
+
 		if (self::authorizeClearLog($_log)) {
 			$path = self::getPathToLog($_log);
 			com_shell::execute(system::getCmdSudo() . 'chmod 664 ' . $path . ' > /dev/null 2>&1;' . system::getCmdSudo() . 'chown -R ' . system::get('www-uid') . ':' . system::get('www-gid') . ' ' . $path . ' > /dev/null 2>&1;' . system::getCmdSudo() . ' cat /dev/null > ' . $path . ';rm ' . $path . ' 2>&1 > /dev/null');
-
-
-
 			return true;
 		}
 	}
 
-	public static function removeAll() {
+	public static function removeAll(): void {
 		foreach (ls(self::getPathToLog(''), '*', false, array('files')) as $log)
 			self::remove($log);
-		return true;
+		return;
 	}
 
 	/**
