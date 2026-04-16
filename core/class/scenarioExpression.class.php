@@ -1569,18 +1569,17 @@ class scenarioExpression {
 							if (is_array($this->getOptions('tags'))) {
 								$actionScenario->setTags($this->getOptions('tags'));
 							}
-							$this->setLog($scenario, $GLOBALS['JEEDOM_SCLOG_TEXT']['launchScenario']['txt'] . $actionScenario->getName() . ' ' . __('options :', __FILE__) . ' ' . json_encode($actionScenario->getTags()));
 							if ($scenario !== null) {
 								$actionScenario->addTag('trigger', 'scenario');
 								$actionScenario->addTag('trigger_message', $GLOBALS['JEEDOM_SCLOG_TEXT']['startByScenario']['txt'] . $scenario->getHumanName());
 								$actionScenario->addTag('trigger_name', trim($scenario->getHumanName(), '#'));
 								$actionScenario->addTag('trigger_id', $scenario->getId());
-								return $actionScenario->launch();
 							} else {
 								$actionScenario->addTag('trigger', 'other');
 								$actionScenario->addTag('trigger_message', $GLOBALS['JEEDOM_SCLOG_TEXT']['startCausedBy']['txt']);
-								return $actionScenario->launch();
 							}
+							$this->setLog($scenario, $GLOBALS['JEEDOM_SCLOG_TEXT']['launchScenario']['txt'] . $actionScenario->getName() . ' ' . __('options :', __FILE__) . ' ' . json_encode($actionScenario->getTags()));
+							return $actionScenario->launch();
 							break;
 						case 'startsync':
 							if ($this->getOptions('tags') != '' && !is_array($this->getOptions('tags'))) {
