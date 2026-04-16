@@ -622,7 +622,7 @@ try {
 		}
 
 		if ($jsonrpc->getMethod() == 'backup::restoreMarket') {
-			repo_market::backup_restore($params['backup'], true);
+			repo_market::backup_restore($params['backup']);
 			$jsonrpc->makeSuccess();
 		}
 
@@ -728,7 +728,7 @@ try {
 		}
 
 		if ($jsonrpc->getMethod() == 'update::update') {
-			jeedom::update('', 0);
+			jeedom::update('');
 			$jsonrpc->makeSuccess('ok');
 		}
 

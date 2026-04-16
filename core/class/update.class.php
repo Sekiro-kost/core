@@ -515,7 +515,7 @@ class update {
 				return;
 			}
 			if (config::byKey('core::repo::provider') == 'default') {
-				$this->setRemoteVersion(self::getLastAvailableVersion(true));
+				$this->setRemoteVersion(self::getLastAvailableVersion());
 			} else {
 				$class = 'repo_' . config::byKey('core::repo::provider');
 				if (!method_exists($class, 'versionCore') || config::byKey(config::byKey('core::repo::provider') . '::enable') != 1) {
