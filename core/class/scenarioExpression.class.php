@@ -1579,8 +1579,9 @@ class scenarioExpression {
 								$actionScenario->addTag('trigger', 'other');
 								$actionScenario->addTag('trigger_message', $GLOBALS['JEEDOM_SCLOG_TEXT']['startCausedBy']['txt']);
 							}
-							$this->setLog($scenario, $GLOBALS['JEEDOM_SCLOG_TEXT']['launchScenario']['txt'] . $actionScenario->getName() . ' ' . __('options :', __FILE__) . ' ' . json_encode($actionScenario->getTags()));
 							$forceSync = ($this->getOptions('action') == 'startsync');
+							$launchScenarioLogKey = ($forceSync) ? 'launchScenarioSync' : 'launchScenario';
+							$this->setLog($scenario, $GLOBALS['JEEDOM_SCLOG_TEXT'][$launchScenarioLogKey]['txt'] . $actionScenario->getName() . ' ' . __('options :', __FILE__) . ' ' . json_encode($actionScenario->getTags()));
 							return $actionScenario->launch($forceSync);
 						case 'stop':
 							$this->setLog($scenario, __('Arrêt forcé du scénario :', __FILE__) . ' ' . $actionScenario->getName());
