@@ -1557,6 +1557,7 @@ class scenarioExpression {
 					}
 					switch ($this->getOptions('action')) {
 						case 'start':
+						case 'startsync':
 							if ($this->getOptions('tags') != '' && !is_array($this->getOptions('tags'))) {
 								$tags = array();
 								$args = arg2array($this->getOptions('tags'));
@@ -1579,34 +1580,8 @@ class scenarioExpression {
 								$actionScenario->addTag('trigger_message', $GLOBALS['JEEDOM_SCLOG_TEXT']['startCausedBy']['txt']);
 							}
 							$this->setLog($scenario, $GLOBALS['JEEDOM_SCLOG_TEXT']['launchScenario']['txt'] . $actionScenario->getName() . ' ' . __('options :', __FILE__) . ' ' . json_encode($actionScenario->getTags()));
-							return $actionScenario->launch();
-							break;
-						case 'startsync':
-							if ($this->getOptions('tags') != '' && !is_array($this->getOptions('tags'))) {
-								$tags = array();
-								$args = arg2array($this->getOptions('tags'));
-								foreach ($args as $key => $value) {
-									$value = trim($value);
-									$tags['#' . trim(trim($key), '#') . '#'] = trim(self::setTags($value, $scenario), '"');
-								}
-								$actionScenario->setTags($tags);
-							}
-							if (is_array($this->getOptions('tags'))) {
-								$actionScenario->setTags($this->getOptions('tags'));
-							}
-							$this->setLog($scenario, $GLOBALS['JEEDOM_SCLOG_TEXT']['launchScenario']['txt'] . $actionScenario->getName() . ' ' . __('options :', __FILE__) . ' ' . json_encode($actionScenario->getTags()));
-							if ($scenario !== null) {
-								$actionScenario->addTag('trigger', 'scenario');
-								$actionScenario->addTag('trigger_message', $GLOBALS['JEEDOM_SCLOG_TEXT']['startByScenario']['txt'] . $scenario->getHumanName());
-								$actionScenario->addTag('trigger_name', trim($scenario->getHumanName(), '#'));
-								$actionScenario->addTag('trigger_id', $scenario->getId());
-								return $actionScenario->launch(true);
-							} else {
-								$actionScenario->addTag('trigger', 'other');
-								$actionScenario->addTag('trigger_message', $GLOBALS['JEEDOM_SCLOG_TEXT']['startCausedBy']['txt']);
-								return $actionScenario->launch(true);
-							}
-							break;
+							$forceSync = ($this->getOptions('action') == 'startsync');
+							return $actionScenario->launch($forceSync);
 						case 'stop':
 							$this->setLog($scenario, __('Arrêt forcé du scénario :', __FILE__) . ' ' . $actionScenario->getName());
 							$actionScenario->stop();
