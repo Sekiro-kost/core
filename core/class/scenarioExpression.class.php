@@ -1551,11 +1551,7 @@ class scenarioExpression {
 					event::add('changeTheme', $options['theme']);
 					return;
 				} elseif ($this->getExpression() == 'scenario') {
-					if ($scenario !== null && $this->getOptions('scenario_id') == $scenario->getId()) {
-						$actionScenario = &$scenario;
-					} else {
-						$actionScenario = scenario::byId($this->getOptions('scenario_id'));
-					}
+					$actionScenario = scenario::byId($this->getOptions('scenario_id'));
 					if (!is_object($actionScenario)) {
 						throw new Exception($GLOBALS['JEEDOM_SCLOG_TEXT']['unfoundScenario']['txt'] . $this->getOptions('scenario_id'));
 					}
