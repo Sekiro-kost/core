@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - develop
-      - draft-release-notes
+      - feat/changelog-develop
   workflow_dispatch:
 
 permissions:
