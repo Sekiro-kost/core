@@ -48,7 +48,9 @@ jobs:
 
       - name: Delete existing branch if exists
         run: |
-          git ls-remote --exit-code --heads origin update-phpstan-baseline && git push origin --delete update-phpstan-baseline
+          if git ls-remote --heads origin update-phpstan-baseline | grep -q update-phpstan-baseline; then
+            git push origin --delete update-phpstan-baseline
+          fi
 
       - name: Setup PHP 7.4 for dependencies
         uses: shivammathur/setup-php@v2
