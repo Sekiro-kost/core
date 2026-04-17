@@ -1,17 +1,19 @@
-# Pull Requests since tag 4.5.3
+# Pull Requests since release 4.5.3
 
-- PR #3265: [CI] Update PHPStan baseline (merged 2026-04-17T12:23:36Z)
-- PR #3263: Corriger l'échec du workflow PHPStan lors de la suppression de branche (merged 2026-04-17T10:26:56Z)
-- PR #3262: fix display_name field (ui) (merged 2026-04-17T13:14:11Z)
-- PR #3259: Correction des méthodes statiques et du nommage de classes (PHPStan lvl 1) (merged 2026-04-17T07:35:16Z)
-- PR #3258: Suppression des arguments superflus dans les appels de méthodes (PHPStan lvl 1) (merged 2026-04-17T07:35:39Z)
-- PR #3256: Migrer PHPStan vers une dépendance Composer (edit #3110) (merged 2026-04-16T20:32:24Z)
-- PR #3255: Fix/scenario self execute mixing tags (merged 2026-04-17T12:01:55Z)
-- PR #3246: Correction *aucun* script (merged 2026-04-08T07:16:23Z)
-- PR #3245: feat: improve "do not remove log" feature (merged 2026-04-13T06:16:53Z)
-- PR #3242: implode groupingType if is array (merged 2026-04-16T11:05:53Z)
-- PR #3241: typo Securité (merged 2026-04-04T05:56:05Z)
-- PR #3240: chore: update GitHub workflows to use 'develop' branch instead of 'alpha' and 'beta' (merged 2026-04-03T13:27:29Z)
-- PR #3238: Fix: resolve 3 bugs in proxy configuration in jsonrpcClient (merged 2026-04-02T12:13:11Z)
-- PR #3197: Fix randText (merged 2026-04-03T06:46:58Z)
-- PR #3178: fix graphUpdate function in history class (merged 2026-03-31T18:51:42Z)
+| Merge date | Title | PR |
+| --- | --- | --- |
+| 2026-04-17 15:14:11 | fix display_name field (ui) | [#3262](https://github.com/jeedom/core/pull/3262) |
+| 2026-04-17 14:23:36 | [CI] Update PHPStan baseline | [#3265](https://github.com/jeedom/core/pull/3265) |
+| 2026-04-17 14:01:55 | Fix/scenario self execute mixing tags | [#3255](https://github.com/jeedom/core/pull/3255) |
+| 2026-04-17 12:26:56 | Corriger l'échec du workflow PHPStan lors de la suppression de branche | [#3263](https://github.com/jeedom/core/pull/3263) |
+| 2026-04-17 09:35:39 | Suppression des arguments superflus dans les appels de méthodes (PHPStan lvl 1) | [#3258](https://github.com/jeedom/core/pull/3258) |
+| 2026-04-17 09:35:16 | Correction des méthodes statiques et du nommage de classes (PHPStan lvl 1) | [#3259](https://github.com/jeedom/core/pull/3259) |
+| 2026-04-16 22:32:24 | Migrer PHPStan vers une dépendance Composer (edit #3110) | [#3256](https://github.com/jeedom/core/pull/3256) |
+| 2026-04-16 13:05:53 | implode groupingType if is array | [#3242](https://github.com/jeedom/core/pull/3242) |
+| 2026-04-13 08:16:53 | feat: improve "do not remove log" feature | [#3245](https://github.com/jeedom/core/pull/3245) |
+| 2026-04-08 09:16:23 | Correction *aucun* script | [#3246](https://github.com/jeedom/core/pull/3246) |
+| 2026-04-04 07:56:05 | typo Securité | [#3241](https://github.com/jeedom/core/pull/3241) |
+| 2026-04-03 15:27:29 | chore: update GitHub workflows to use 'develop' branch instead of 'alpha' and 'beta' | [#3240](https://github.com/jeedom/core/pull/3240) |
+| 2026-04-03 08:46:58 | Fix randText | [#3197](https://github.com/jeedom/core/pull/3197) |
+| 2026-04-02 14:13:11 | Fix: resolve 3 bugs in proxy configuration in jsonrpcClient | [#3238](https://github.com/jeedom/core/pull/3238) |
+| 2026-03-31 20:51:42 | fix graphUpdate function in history class | [#3178](https://github.com/jeedom/core/pull/3178) |
