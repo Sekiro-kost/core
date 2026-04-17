@@ -1,0 +1,67 @@
+name: Generate PR list markdown
+
+on:
+  push:
+    branches:
+      - develop
+      - draft-release-notes
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  pr-list:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get last tag
+        id: lasttag
+        run: |
+          TAG=$(git describe --tags --abbrev=0)
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Get tag date
+        id: tagdate
+        run: |
+          DATE=$(git log -1 --format=%cI ${{ steps.lasttag.outputs.tag }})
+          echo "date=$DATE" >> $GITHUB_OUTPUT
+
+      - name: Generate markdown file
+        id: genmd
+        run: |
+          mkdir -p docs
+
+          echo "# Pull Requests since tag ${{ steps.lasttag.outputs.tag }}" > docs/release-notes.md
+          echo "" >> docs/release-notes.md
+
+          gh pr list \
+            --state merged \
+            --base develop \
+            --search "merged:>${{ steps.tagdate.outputs.date }}" \
+            --json number,title,mergedAt \
+            --jq '.[] | "- PR #\(.number): \(.title) (merged \(.mergedAt))"' \
+            >> docs/release-notes.md
+
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit markdown file
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add docs/release-notes.md
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          git commit -m "Update release-notes.md [skip ci]"
+          git push
