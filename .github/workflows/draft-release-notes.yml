@@ -37,19 +37,22 @@ jobs:
         run: |
           mkdir -p docs
 
-          echo "# Pull Requests since tag ${{ steps.lasttag.outputs.tag }}" > docs/release-notes.md
+          echo "# Pull Requests since release ${{ steps.lasttag.outputs.tag }}" > docs/release-notes.md
           echo "" >> docs/release-notes.md
+          echo "| Merge date | Title | PR |" >> docs/release-notes.md
+          echo "| --- | --- | --- |" >> docs/release-notes.md
 
           gh pr list \
             --state merged \
             --base develop \
             --search "merged:>${{ steps.tagdate.outputs.date }}" \
-            --json number,title,mergedAt \
-            --jq '.[] | "- PR #\(.number): \(.title) (merged \(.mergedAt))"' \
+            --json number,title,mergedAt,url \
+            --jq 'sort_by(.mergedAt) | reverse | .[] | "| \(.mergedAt | fromdateiso8601 | strflocaltime("%Y-%m-%d %H:%M:%S")) | \(.title | gsub("\\|"; "\\\\|")) | [#\(.number)](\(.url)) |"' \
             >> docs/release-notes.md
 
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TZ: Europe/Paris
 
       - name: Commit markdown file
         run: |
