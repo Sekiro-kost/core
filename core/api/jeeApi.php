@@ -416,7 +416,7 @@ try {
 		if (is_object($_USER_GLOBAL) && $_USER_GLOBAL->getProfils() != 'admin') {
 			throw new Exception(__('Vous n\'êtes pas autorisé à effectuer cette action', __FILE__) . ' ' . $jsonrpc->getMethod(), -32001);
 		}
-		jeedom::update($params['options'], 0);
+		jeedom::update($params['options']);
 		$jsonrpc->makeSuccess('ok');
 	}
 
@@ -1276,7 +1276,7 @@ try {
 			throw new Exception(__('Vous n\'avez pas les droits de faire cette action', __FILE__), -32701);
 		}
 		unautorizedInDemo();
-		jeedom::update('', 0);
+		jeedom::update('');
 		$jsonrpc->makeSuccess('ok');
 	}
 
