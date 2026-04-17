@@ -667,7 +667,7 @@ class interactQuery {
 		return $return;
 	}
 
-	public function replaceForContextual($_replace, $_by, $_in) {
+	public static function replaceForContextual($_replace, $_by, $_in) {
 		return str_replace(strtolower(sanitizeAccent($_replace)), strtolower(sanitizeAccent($_by)), str_replace($_replace, $_by, $_in));
 	}
 
