@@ -1,9 +1,7 @@
 # All changes since release 4.5.3
 
-## New features
-| Merge date | Title | PR |
-| --- | --- | --- |
-| 2026-04-13 08:16:53 | feat: improve "do not remove log" feature | [#3245](https://github.com/jeedom/core/pull/3245) |
+## New core features
+no entries
 
 ## Fixes
 | Merge date | Title | PR |
@@ -30,4 +28,5 @@ no entries
 | 2026-04-17 21:11:17 | new workflow for translations | [#3251](https://github.com/jeedom/core/pull/3251) |
 | 2026-04-17 12:26:56 | Fix PHPStan workflow on branch deletion | [#3263](https://github.com/jeedom/core/pull/3263) |
 | 2026-04-16 22:32:24 | Use Composer dependency for PHPStan | [#3256](https://github.com/jeedom/core/pull/3256) |
+| 2026-04-13 08:16:53 | feat: improve "do not remove log" feature | [#3245](https://github.com/jeedom/core/pull/3245) |
 | 2026-04-03 15:27:29 | Update GitHub workflows to use 'develop' branch instead of 'alpha' and 'beta' | [#3240](https://github.com/jeedom/core/pull/3240) |
