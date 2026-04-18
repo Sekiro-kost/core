@@ -45,7 +45,7 @@ jobs:
             --search "merged:>${{ steps.tagdate.outputs.date }}" \
             --json number,title,mergedAt,url,labels)
 
-          echo "## New features" >> docs/release-notes.md
+          echo "## New core features" >> docs/release-notes.md
           FEAT_ROWS=$(echo "$PRS_JSON" | jq -r '
             map(select((.title | startswith("[CI]")) | not))
             | map(select(any(.labels[]?; (.name | ascii_downcase) == "changelog-feat")))
