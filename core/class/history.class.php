@@ -322,12 +322,18 @@ class history {
 					continue;
 				}
 				$mode = $cmd->getConfiguration('historizeMode', 'avg');
+				if (!in_array($mode, array('avg', 'min', 'max', 'none'))) {
+					$mode = 'avg';
+				}
 				$values = array(
 					'cmd_id' => $sensors['cmd_id'],
 					'archivePackage' => config::byKey('historyArchivePackage') * 3600,
 					'archiveTime' => $archiveDatetime
 				);
-				$round = (is_numeric($cmd->getConfiguration('historizeRound'))) ? $cmd->getConfiguration('historizeRound') : 2;
+				$round = (is_numeric($cmd->getConfiguration('historizeRound'))) ? intval($cmd->getConfiguration('historizeRound')) : 2;
+				if ($round < 0 || $round > 12) {
+					$round = 2;
+				}
 				$sql = 'REPLACE INTO historyArch(cmd_id,`datetime`,value) SELECT cmd_id,MIN(`datetime`),' . $mode . '(CAST(value AS DECIMAL(12,' . $round . '))) as value
                 FROM history
                 WHERE `datetime` <= :archiveTime
