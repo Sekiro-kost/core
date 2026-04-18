@@ -156,30 +156,45 @@ class log extends AbstractLogger {
 	}
 
 	public static function chunkLog($_path) {
-		if (strpos($_path, '.htaccess') !== false) {
+		if (strpos($_path, '.htaccess') !== false || !file_exists($_path)) {
 			return;
 		}
+		
 		$maxLineLog = self::getConfig('maxLineLog');
 		if ($maxLineLog < self::DEFAULT_MAX_LINE) {
 			$maxLineLog = self::DEFAULT_MAX_LINE;
 		}
+	
+		$sudo = system::getCmdSudo();
+		$user = system::get('www-uid');
+		$group = system::get('www-gid');
+		$tmpFile = $_path . '.tmp';
+	
 		try {
-			com_shell::execute(system::getCmdSudo() . 'chmod 664 ' . $_path . ' > /dev/null 2>&1;' . system::getCmdSudo() . 'chown -R ' . system::get('www-uid') . ':' . system::get('www-gid') . ' ' . $_path . ' > /dev/null 2>&1;' . system::getCmdSudo() . ' echo "$(tail -n ' . $maxLineLog . ' ' . $_path . ')" > ' . $_path);
+			// 1. Correction des droits
+			com_shell::execute($sudo . 'chmod 664 ' . $_path . ' > /dev/null 2>&1');
+			com_shell::execute($sudo . 'chown ' . $user . ':' . $group . ' ' . $_path . ' > /dev/null 2>&1');
+	
+			// 2. Nettoyage sécurisé des lignes (évite la race condition)
+			// On extrait vers un fichier temporaire d'abord pour ne pas vider la source avant lecture
+			com_shell::execute($sudo . 'tail -n ' . (int)$maxLineLog . ' ' . $_path . ' > ' . $tmpFile);
+			
+			// On réinjecte dans l'original (cat préserve l'Inode pour les démons)
+			if (file_exists($tmpFile)) {
+				com_shell::execute($sudo . 'cat ' . $tmpFile . ' > ' . $_path . ' && ' . $sudo . 'rm -f ' . $tmpFile);
+			}
 		} catch (\Exception $e) {
+			// Gestion d'erreur silencieuse conforme à l'existant
 		}
-		@chown($_path, system::get('www-uid'));
-		@chgrp($_path, system::get('www-gid'));
-		if (filesize($_path) > (1024 * 1024 * 10)) {
-			com_shell::execute(system::getCmdSudo() . 'truncate -s 0 ' . $_path);
-		}
-		if (filesize($_path) > (1024 * 1024 * 10)) {
-			com_shell::execute(system::getCmdSudo() . 'cat /dev/null > ' . $_path);
-		}
-		if (filesize($_path) > (1024 * 1024 * 10)) {
-			com_shell::execute(system::getCmdSudo() . ' rm -f ' . $_path);
+
+		// 3. Vérification de la taille critique (10Mo)
+		clearstatcache(true, $_path); // Indispensable pour rafraîchir filesize()
+		if (file_exists($_path) && filesize($_path) > (1024 * 1024 * 10)) {
+			// truncate est la seule méthode sûre pour vider un fichier sans détruire l'Inode
+			com_shell::execute($sudo . 'truncate -s 0 ' . $_path);
 		}
 	}
-
+	
 	public static function getPathToLog($_log = 'core') {
 		return __DIR__ . '/../../log/' . $_log;
 	}
