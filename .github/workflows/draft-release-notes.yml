@@ -37,39 +37,71 @@ jobs:
         run: |
           mkdir -p docs
 
-          echo "# Pull Requests since release ${{ steps.lasttag.outputs.tag }}" > docs/release-notes.md
+          echo "# All changes since release ${{ steps.lasttag.outputs.tag }}" > docs/release-notes.md
           echo "" >> docs/release-notes.md
           PRS_JSON=$(gh pr list \
             --state merged \
             --base develop \
             --search "merged:>${{ steps.tagdate.outputs.date }}" \
-            --json number,title,mergedAt,url)
+            --json number,title,mergedAt,url,labels)
 
-          echo "## Changes" >> docs/release-notes.md
-          CHANGES_ROWS=$(echo "$PRS_JSON" | jq -r '
+          echo "## New features" >> docs/release-notes.md
+          FEAT_ROWS=$(echo "$PRS_JSON" | jq -r '
             map(select((.title | startswith("[CI]")) | not))
-            | map(select(((.title | ascii_downcase | startswith("docs:")) or (.title | ascii_downcase | startswith("ci:"))) | not))
+            | map(select(any(.labels[]?; (.name | ascii_downcase) == "changelog-feat")))
             | sort_by(.mergedAt) | reverse | .[]
             | "| \(.mergedAt | fromdateiso8601 | strflocaltime("%Y-%m-%d %H:%M:%S")) | \(.title | gsub("\\|"; "\\\\|")) | [#\(.number)](\(.url)) |"
           ')
-          if [ -z "$CHANGES_ROWS" ]; then
-            echo "No entries" >> docs/release-notes.md
+          if [ -z "$FEAT_ROWS" ]; then
+            echo "no entries" >> docs/release-notes.md
           else
             echo "| Merge date | Title | PR |" >> docs/release-notes.md
             echo "| --- | --- | --- |" >> docs/release-notes.md
-            echo "$CHANGES_ROWS" >> docs/release-notes.md
+            echo "$FEAT_ROWS" >> docs/release-notes.md
+          fi
+          echo "" >> docs/release-notes.md
+
+          echo "## Fixes" >> docs/release-notes.md
+          FIX_ROWS=$(echo "$PRS_JSON" | jq -r '
+            map(select((.title | startswith("[CI]")) | not))
+            | map(select(any(.labels[]?; (.name | ascii_downcase) == "changelog-fix")))
+            | sort_by(.mergedAt) | reverse | .[]
+            | "| \(.mergedAt | fromdateiso8601 | strflocaltime("%Y-%m-%d %H:%M:%S")) | \(.title | gsub("\\|"; "\\\\|")) | [#\(.number)](\(.url)) |"
+          ')
+          if [ -z "$FIX_ROWS" ]; then
+            echo "no entries" >> docs/release-notes.md
+          else
+            echo "| Merge date | Title | PR |" >> docs/release-notes.md
+            echo "| --- | --- | --- |" >> docs/release-notes.md
+            echo "$FIX_ROWS" >> docs/release-notes.md
+          fi
+          echo "" >> docs/release-notes.md
+
+          echo "## Others" >> docs/release-notes.md
+          OTHERS_ROWS=$(echo "$PRS_JSON" | jq -r '
+            map(select((.title | startswith("[CI]")) | not))
+            | map(select(any(.labels[]?; (.name | ascii_downcase) == "changelog-other")))
+            | sort_by(.mergedAt) | reverse | .[]
+            | "| \(.mergedAt | fromdateiso8601 | strflocaltime("%Y-%m-%d %H:%M:%S")) | \(.title | gsub("\\|"; "\\\\|")) | [#\(.number)](\(.url)) |"
+          ')
+          if [ -z "$OTHERS_ROWS" ]; then
+            echo "no entries" >> docs/release-notes.md
+          else
+            echo "| Merge date | Title | PR |" >> docs/release-notes.md
+            echo "| --- | --- | --- |" >> docs/release-notes.md
+            echo "$OTHERS_ROWS" >> docs/release-notes.md
           fi
           echo "" >> docs/release-notes.md
 
           echo "## Documentations" >> docs/release-notes.md
           DOCS_ROWS=$(echo "$PRS_JSON" | jq -r '
             map(select((.title | startswith("[CI]")) | not))
-            | map(select(.title | ascii_downcase | startswith("docs:")))
+            | map(select(any(.labels[]?; (.name | ascii_downcase) == "changelog-docs")))
             | sort_by(.mergedAt) | reverse | .[]
             | "| \(.mergedAt | fromdateiso8601 | strflocaltime("%Y-%m-%d %H:%M:%S")) | \(.title | gsub("\\|"; "\\\\|")) | [#\(.number)](\(.url)) |"
           ')
           if [ -z "$DOCS_ROWS" ]; then
-            echo "No entries" >> docs/release-notes.md
+            echo "no entries" >> docs/release-notes.md
           else
             echo "| Merge date | Title | PR |" >> docs/release-notes.md
             echo "| --- | --- | --- |" >> docs/release-notes.md
@@ -80,12 +112,12 @@ jobs:
           echo "## Developer" >> docs/release-notes.md
           DEV_ROWS=$(echo "$PRS_JSON" | jq -r '
             map(select((.title | startswith("[CI]")) | not))
-            | map(select(.title | ascii_downcase | startswith("ci:")))
+            | map(select(any(.labels[]?; (.name | ascii_downcase) == "changelog-dev")))
             | sort_by(.mergedAt) | reverse | .[]
             | "| \(.mergedAt | fromdateiso8601 | strflocaltime("%Y-%m-%d %H:%M:%S")) | \(.title | gsub("\\|"; "\\\\|")) | [#\(.number)](\(.url)) |"
           ')
           if [ -z "$DEV_ROWS" ]; then
-            echo "No entries" >> docs/release-notes.md
+            echo "no entries" >> docs/release-notes.md
           else
             echo "| Merge date | Title | PR |" >> docs/release-notes.md
             echo "| --- | --- | --- |" >> docs/release-notes.md
