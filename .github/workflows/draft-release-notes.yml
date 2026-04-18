@@ -1,4 +1,4 @@
-name: Generate PR list markdown
+name: Generate draft release notes
 
 on:
   push:
@@ -11,12 +11,12 @@ permissions:
   contents: write
 
 jobs:
-  pr-list:
+  release-notes:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -39,16 +39,58 @@ jobs:
 
           echo "# Pull Requests since release ${{ steps.lasttag.outputs.tag }}" > docs/release-notes.md
           echo "" >> docs/release-notes.md
-          echo "| Merge date | Title | PR |" >> docs/release-notes.md
-          echo "| --- | --- | --- |" >> docs/release-notes.md
-
-          gh pr list \
+          PRS_JSON=$(gh pr list \
             --state merged \
             --base develop \
             --search "merged:>${{ steps.tagdate.outputs.date }}" \
-            --json number,title,mergedAt,url \
-            --jq 'sort_by(.mergedAt) | reverse | .[] | "| \(.mergedAt | fromdateiso8601 | strflocaltime("%Y-%m-%d %H:%M:%S")) | \(.title | gsub("\\|"; "\\\\|")) | [#\(.number)](\(.url)) |"' \
-            >> docs/release-notes.md
+            --json number,title,mergedAt,url)
+
+          echo "## Changes" >> docs/release-notes.md
+          CHANGES_ROWS=$(echo "$PRS_JSON" | jq -r '
+            map(select((.title | startswith("[CI]")) | not))
+            | map(select(((.title | ascii_downcase | startswith("docs:")) or (.title | ascii_downcase | startswith("ci:"))) | not))
+            | sort_by(.mergedAt) | reverse | .[]
+            | "| \(.mergedAt | fromdateiso8601 | strflocaltime("%Y-%m-%d %H:%M:%S")) | \(.title | gsub("\\|"; "\\\\|")) | [#\(.number)](\(.url)) |"
+          ')
+          if [ -z "$CHANGES_ROWS" ]; then
+            echo "No entries" >> docs/release-notes.md
+          else
+            echo "| Merge date | Title | PR |" >> docs/release-notes.md
+            echo "| --- | --- | --- |" >> docs/release-notes.md
+            echo "$CHANGES_ROWS" >> docs/release-notes.md
+          fi
+          echo "" >> docs/release-notes.md
+
+          echo "## Documentations" >> docs/release-notes.md
+          DOCS_ROWS=$(echo "$PRS_JSON" | jq -r '
+            map(select((.title | startswith("[CI]")) | not))
+            | map(select(.title | ascii_downcase | startswith("docs:")))
+            | sort_by(.mergedAt) | reverse | .[]
+            | "| \(.mergedAt | fromdateiso8601 | strflocaltime("%Y-%m-%d %H:%M:%S")) | \(.title | gsub("\\|"; "\\\\|")) | [#\(.number)](\(.url)) |"
+          ')
+          if [ -z "$DOCS_ROWS" ]; then
+            echo "No entries" >> docs/release-notes.md
+          else
+            echo "| Merge date | Title | PR |" >> docs/release-notes.md
+            echo "| --- | --- | --- |" >> docs/release-notes.md
+            echo "$DOCS_ROWS" >> docs/release-notes.md
+          fi
+          echo "" >> docs/release-notes.md
+
+          echo "## Developer" >> docs/release-notes.md
+          DEV_ROWS=$(echo "$PRS_JSON" | jq -r '
+            map(select((.title | startswith("[CI]")) | not))
+            | map(select(.title | ascii_downcase | startswith("ci:")))
+            | sort_by(.mergedAt) | reverse | .[]
+            | "| \(.mergedAt | fromdateiso8601 | strflocaltime("%Y-%m-%d %H:%M:%S")) | \(.title | gsub("\\|"; "\\\\|")) | [#\(.number)](\(.url)) |"
+          ')
+          if [ -z "$DEV_ROWS" ]; then
+            echo "No entries" >> docs/release-notes.md
+          else
+            echo "| Merge date | Title | PR |" >> docs/release-notes.md
+            echo "| --- | --- | --- |" >> docs/release-notes.md
+            echo "$DEV_ROWS" >> docs/release-notes.md
+          fi
 
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
