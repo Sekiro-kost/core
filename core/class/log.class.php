@@ -168,7 +168,8 @@ class log extends AbstractLogger {
 		$sudo = system::getCmdSudo();
 		$tmpFile = tempnam(jeedom::getTmpFolder(), 'log_chunk_');
 		if ($tmpFile === false) {
-			$tmpFile = jeedom::getTmpFolder() . '/log_chunk.tmp';
+			log::add('jeedom', "error", 'Failed to create temporary file in chunkLog() for:' . basename($rawPath));
+			return;
 		}
 		$tmpFile = escapeshellarg($tmpFile);
 		$maxSizeLog = (int)self::getConfig('maxSizeLog', 10);
