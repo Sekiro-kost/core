@@ -155,46 +155,42 @@ class log extends AbstractLogger {
 		}
 	}
 
-	public static function chunkLog($_path) {
+	private static function chunkLog(string $_path) {
 		if (strpos($_path, '.htaccess') !== false || !file_exists($_path)) {
 			return;
 		}
-		
+
 		$maxLineLog = self::getConfig('maxLineLog');
 		if ($maxLineLog < self::DEFAULT_MAX_LINE) {
 			$maxLineLog = self::DEFAULT_MAX_LINE;
 		}
-	
+
 		$sudo = system::getCmdSudo();
 		$user = system::get('www-uid');
 		$group = system::get('www-gid');
 		$tmpFile = $_path . '.tmp';
-	
+
 		try {
-			// 1. Correction des droits
 			com_shell::execute($sudo . 'chmod 664 ' . $_path . ' > /dev/null 2>&1');
 			com_shell::execute($sudo . 'chown ' . $user . ':' . $group . ' ' . $_path . ' > /dev/null 2>&1');
-	
-			// 2. Nettoyage sécurisé des lignes (évite la race condition)
-			// On extrait vers un fichier temporaire d'abord pour ne pas vider la source avant lecture
+
+			// Extract to a temporary file first to avoid emptying the source before reading
 			com_shell::execute($sudo . 'tail -n ' . (int)$maxLineLog . ' ' . $_path . ' > ' . $tmpFile);
-			
-			// On réinjecte dans l'original (cat préserve l'Inode pour les démons)
+
+			// Reinject into the original (cat preserves the Inode for daemons)
 			if (file_exists($tmpFile)) {
 				com_shell::execute($sudo . 'cat ' . $tmpFile . ' > ' . $_path . ' && ' . $sudo . 'rm -f ' . $tmpFile);
 			}
 		} catch (\Exception $e) {
-			// Gestion d'erreur silencieuse conforme à l'existant
 		}
 
-		// 3. Vérification de la taille critique (10Mo)
-		clearstatcache(true, $_path); // Indispensable pour rafraîchir filesize()
+		clearstatcache(true, $_path);
 		if (file_exists($_path) && filesize($_path) > (1024 * 1024 * 10)) {
-			// truncate est la seule méthode sûre pour vider un fichier sans détruire l'Inode
+			// use truncate to empty file without destroying Inode
 			com_shell::execute($sudo . 'truncate -s 0 ' . $_path);
 		}
 	}
-	
+
 	public static function getPathToLog($_log = 'core') {
 		return __DIR__ . '/../../log/' . $_log;
 	}
