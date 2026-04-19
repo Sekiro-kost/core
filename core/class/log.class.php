@@ -155,39 +155,39 @@ class log extends AbstractLogger {
 		}
 	}
 
-	private static function chunkLog(string $_path) {
-		if (strpos($_path, '.htaccess') !== false || !file_exists($_path)) {
+	private static function chunkLog(string $path) {
+		if (strpos($path, '.htaccess') !== false || !file_exists($path)) {
 			return;
 		}
 
-		$maxLineLog = self::getConfig('maxLineLog');
+		$maxLineLog = (int)self::getConfig('maxLineLog', self::DEFAULT_MAX_LINE);
 		if ($maxLineLog < self::DEFAULT_MAX_LINE) {
 			$maxLineLog = self::DEFAULT_MAX_LINE;
 		}
 
 		$sudo = system::getCmdSudo();
+		$tmpFile = jeedom::getTmpFolder() . '/log.tmp';
+		$maxSizeLog = (int)self::getConfig('maxSizeLog', '10');
+		$path = escapeshellarg($path);
+
 		$user = system::get('www-uid');
 		$group = system::get('www-gid');
-		$tmpFile = $_path . '.tmp';
 
 		try {
-			com_shell::execute($sudo . 'chmod 664 ' . $_path . ' > /dev/null 2>&1');
-			com_shell::execute($sudo . 'chown ' . $user . ':' . $group . ' ' . $_path . ' > /dev/null 2>&1');
+			com_shell::execute("{$sudo} chmod 664 {$path} > /dev/null 2>&1");
+			com_shell::execute("{$sudo} chown {$user}:{$group} {$path} > /dev/null 2>&1");
 
-			// Extract to a temporary file first to avoid emptying the source before reading
-			com_shell::execute($sudo . 'tail -n ' . (int)$maxLineLog . ' ' . $_path . ' > ' . $tmpFile);
-
-			// Reinject into the original (cat preserves the Inode for daemons)
-			if (file_exists($tmpFile)) {
-				com_shell::execute($sudo . 'cat ' . $tmpFile . ' > ' . $_path . ' && ' . $sudo . 'rm -f ' . $tmpFile);
-			}
+			com_shell::execute("{$sudo} tail -c {$maxSizeLog}M {$path} | tail -n {$maxLineLog} > {$tmpFile} && {$sudo} cat {$tmpFile} > {$path}");
 		} catch (\Exception $e) {
+			log::add('jeedom', "error", "Caught exception in chunkLog(): " . $e->getMessage());
+		} finally {
+			com_shell::execute("{$sudo} rm -f {$tmpFile}");
 		}
 
-		clearstatcache(true, $_path);
-		if (file_exists($_path) && filesize($_path) > (1024 * 1024 * 10)) {
+		clearstatcache(true, $path);
+		if (file_exists($path) && filesize($path) > (1024 * 1024 * $maxSizeLog)) {
 			// use truncate to empty file without destroying Inode
-			com_shell::execute($sudo . 'truncate -s 0 ' . $_path);
+			com_shell::execute("{$sudo} truncate -s 0 {$path}");
 		}
 	}
 
