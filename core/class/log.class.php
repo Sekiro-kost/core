@@ -175,13 +175,7 @@ class log extends AbstractLogger {
 		$maxSizeLog = max(1, $maxSizeLog);
 		$shellPath = escapeshellarg($rawPath);
 
-		$user = system::get('www-uid');
-		$group = system::get('www-gid');
-
 		try {
-			com_shell::execute("{$sudo} chmod 664 {$shellPath} > /dev/null 2>&1");
-			com_shell::execute("{$sudo} chown {$user}:{$group} {$shellPath} > /dev/null 2>&1");
-
 			com_shell::execute("{$sudo} tail -c {$maxSizeLog}M {$shellPath} | tail -n {$maxLineLog} > {$tmpFile} && {$sudo} cat {$tmpFile} > {$shellPath}");
 		} catch (\Exception $e) {
 			log::add('jeedom', "error", "Caught exception in chunkLog(): " . $e->getMessage());
