@@ -177,8 +177,7 @@ class log extends AbstractLogger {
 		$shellPath = escapeshellarg($rawPath);
 
 		try {
-			$bashCmd = "tail -c {$maxSizeLog}M {$shellPath} | tail -n {$maxLineLog} > {$tmpFile} && cat {$tmpFile} > {$shellPath}";
-			com_shell::execute("{$sudo} bash -o pipefail -c \"{$bashCmd}\"");
+			com_shell::execute("{$sudo} tail -c {$maxSizeLog}M {$shellPath} | tail -n {$maxLineLog} > {$tmpFile} && {$sudo} cat {$tmpFile} > {$shellPath}");
 		} catch (\Exception $e) {
 			log::add('jeedom', "error", "Caught exception in chunkLog(): " . $e->getMessage());
 
