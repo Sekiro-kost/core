@@ -181,14 +181,14 @@ class log extends AbstractLogger {
 			com_shell::execute("{$sudo} bash -o pipefail -c \"{$bashCmd}\"");
 		} catch (\Exception $e) {
 			log::add('jeedom', "error", "Caught exception in chunkLog(): " . $e->getMessage());
+
+			clearstatcache(true, $rawPath);
+			if (file_exists($rawPath) && filesize($rawPath) > (1024 * 1024 * $maxSizeLog)) {
+				// use truncate to empty file without destroying Inode
+				com_shell::execute("{$sudo} truncate -s 0 {$shellPath}");
+			}
 		} finally {
 			com_shell::execute("{$sudo} rm -f {$tmpFile}");
-		}
-
-		clearstatcache(true, $rawPath);
-		if (file_exists($rawPath) && filesize($rawPath) > (1024 * 1024 * $maxSizeLog)) {
-			// use truncate to empty file without destroying Inode
-			com_shell::execute("{$sudo} truncate -s 0 {$shellPath}");
 		}
 	}
 
