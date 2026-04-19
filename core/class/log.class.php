@@ -155,8 +155,8 @@ class log extends AbstractLogger {
 		}
 	}
 
-	private static function chunkLog(string $path) {
-		if (strpos($path, '.htaccess') !== false || !file_exists($path)) {
+	private static function chunkLog(string $rawPath) {
+		if (strpos($rawPath, '.htaccess') !== false || !file_exists($rawPath)) {
 			return;
 		}
 
@@ -166,28 +166,33 @@ class log extends AbstractLogger {
 		}
 
 		$sudo = system::getCmdSudo();
-		$tmpFile = jeedom::getTmpFolder() . '/log.tmp';
-		$maxSizeLog = (int)self::getConfig('maxSizeLog', '10');
-		$path = escapeshellarg($path);
+		$tmpFile = tempnam(jeedom::getTmpFolder(), 'log_chunk_');
+		if ($tmpFile === false) {
+			$tmpFile = jeedom::getTmpFolder() . '/log_chunk.tmp';
+		}
+		$tmpFile = escapeshellarg($tmpFile);
+		$maxSizeLog = self::getConfig('maxSizeLog', 10);
+		$maxSizeLog = (int)max(1, min($maxSizeLog, 10));
+		$shellPath = escapeshellarg($rawPath);
 
 		$user = system::get('www-uid');
 		$group = system::get('www-gid');
 
 		try {
-			com_shell::execute("{$sudo} chmod 664 {$path} > /dev/null 2>&1");
-			com_shell::execute("{$sudo} chown {$user}:{$group} {$path} > /dev/null 2>&1");
+			com_shell::execute("{$sudo} chmod 664 {$shellPath} > /dev/null 2>&1");
+			com_shell::execute("{$sudo} chown {$user}:{$group} {$shellPath} > /dev/null 2>&1");
 
-			com_shell::execute("{$sudo} tail -c {$maxSizeLog}M {$path} | tail -n {$maxLineLog} > {$tmpFile} && {$sudo} cat {$tmpFile} > {$path}");
+			com_shell::execute("{$sudo} tail -c {$maxSizeLog}M {$shellPath} | tail -n {$maxLineLog} > {$tmpFile} && {$sudo} cat {$tmpFile} > {$shellPath}");
 		} catch (\Exception $e) {
 			log::add('jeedom', "error", "Caught exception in chunkLog(): " . $e->getMessage());
 		} finally {
 			com_shell::execute("{$sudo} rm -f {$tmpFile}");
 		}
 
-		clearstatcache(true, $path);
-		if (file_exists($path) && filesize($path) > (1024 * 1024 * $maxSizeLog)) {
+		clearstatcache(true, $rawPath);
+		if (file_exists($rawPath) && filesize($rawPath) > (1024 * 1024 * $maxSizeLog)) {
 			// use truncate to empty file without destroying Inode
-			com_shell::execute("{$sudo} truncate -s 0 {$path}");
+			com_shell::execute("{$sudo} truncate -s 0 {$shellPath}");
 		}
 	}
 
