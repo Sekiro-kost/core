@@ -171,8 +171,8 @@ class log extends AbstractLogger {
 			$tmpFile = jeedom::getTmpFolder() . '/log_chunk.tmp';
 		}
 		$tmpFile = escapeshellarg($tmpFile);
-		$maxSizeLog = self::getConfig('maxSizeLog', 10);
-		$maxSizeLog = (int)max(1, min($maxSizeLog, 10));
+		$maxSizeLog = (int)self::getConfig('maxSizeLog', 10);
+		$maxSizeLog = max(1, $maxSizeLog);
 		$shellPath = escapeshellarg($rawPath);
 
 		$user = system::get('www-uid');
