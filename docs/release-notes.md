@@ -1,11 +1,15 @@
 # All changes since release 4.5.3
 
 ## New core features
-no entries
+| Merge date | Title | PR |
+| --- | --- | --- |
+| 2026-04-19 15:18:24 | Add healthcheck in the docker container | [#2998](https://github.com/jeedom/core/pull/2998) |
 
 ## Fixes
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-04-19 20:34:27 | Rename count variable to count_functionality | [#3273](https://github.com/jeedom/core/pull/3273) |
+| 2026-04-19 08:25:34 | fix: prevent a possible SQL injection in setComponentOrder | [#3267](https://github.com/jeedom/core/pull/3267) |
 | 2026-04-17 15:14:11 | fix: display_name field (ui) | [#3262](https://github.com/jeedom/core/pull/3262) |
 | 2026-04-17 14:01:55 | fix: scenario self execute mixing tags | [#3255](https://github.com/jeedom/core/pull/3255) |
 | 2026-04-17 09:35:16 | fix: Correction des méthodes statiques et du nommage de classes (PHPStan lvl 1) | [#3259](https://github.com/jeedom/core/pull/3259) |
