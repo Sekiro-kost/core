@@ -2421,7 +2421,6 @@ class cmd {
 		$cron->setOnce(1);
 		$cron->setSchedule(cron::convertDateToCron(strtotime("now") + 60));
 		$cron->save();
-		return;
 	}
 
 	public function generateAskResponseLink($_response, $_plugin = 'core', $_network = 'external') {
