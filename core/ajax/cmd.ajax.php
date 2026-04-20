@@ -224,7 +224,7 @@ try {
 		if (!is_object($cmd)) {
 			throw new Exception(__('Commande inconnue :', __FILE__) . ' ' . init('id'), 9999);
 		}
-		ajax::success($cmd->historyInflux());
+		ajax::success(cmd::historyInflux($cmd->getId()));
 	}
 
 	if (init('action') == 'dropDatabaseInflux') {
@@ -238,7 +238,7 @@ try {
 		if (!isConnect('admin')) {
 			throw new Exception(__('401 - Accès non autorisé', __FILE__));
 		}
-		ajax::success(cmd::historyInfluxAll());
+		ajax::success(cmd::historyInflux('all'));
 	}
 
 	if (init('action') == 'getHumanCmdName') {

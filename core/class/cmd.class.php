@@ -2358,17 +2358,6 @@ class cmd {
 		return;
 	}
 
-	public static function historyInfluxAll() {
-        $cron = new cron();
-        $cron->setClass('cmd');
-        $cron->setFunction('sendHistoryInflux');
-        $cron->setOption(array('cmd_id' => 'all'));
-        $cron->setLastRun(date('Y-m-d H:i:s'));
-        $cron->setOnce(1);
-        $cron->setSchedule(cron::convertDateToCron(strtotime("now") + 60));
-        $cron->save();
-	}
-
 	public static function sendHistoryInflux($_params) {
 		$cmds = array();
 		if ($_params['cmd_id'] == 'all') {
@@ -2415,14 +2404,18 @@ class cmd {
 		}
 	}
 
-	public function historyInflux($_type = '') {
+	/**
+	 * @param string|int $_type 'all' for all cmd, cmd id for specific cmd
+	 * @return void
+	 */
+	public static function historyInflux($_type = 'all') {
 		$cron = new cron();
 		$cron->setClass('cmd');
 		$cron->setFunction('sendHistoryInflux');
 		if ($_type == 'all') {
 			$cron->setOption(array('cmd_id' => 'all'));
 		} else {
-			$cron->setOption(array('cmd_id' => intval($this->getId())));
+			$cron->setOption(array('cmd_id' => intval($_type)));
 		}
 		$cron->setLastRun(date('Y-m-d H:i:s'));
 		$cron->setOnce(1);
