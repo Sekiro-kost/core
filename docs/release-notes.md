@@ -38,3 +38,8 @@ no entries
 | 2026-04-13 08:16:53 | feat: improve "do not remove log" feature | [#3245](https://github.com/jeedom/core/pull/3245) |
 | 2026-04-03 15:27:29 | Update GitHub workflows to use 'develop' branch instead of 'alpha' and 'beta' | [#3240](https://github.com/jeedom/core/pull/3240) |
 
+## Uncategorized
+| Merge date | Title | PR |
+| --- | --- | --- |
+| 2026-04-17 09:35:39 | fix: Suppression des arguments superflus dans les appels de méthodes (PHPStan lvl 1) | [#3258](https://github.com/jeedom/core/pull/3258) |
+| 2026-04-16 13:05:53 | Fix: issue displaying history if grouping type is set | [#3242](https://github.com/jeedom/core/pull/3242) |
