@@ -72,7 +72,7 @@ jobs:
 
       - name: Build and push Jeedom on Debian:Bookworm without internal DB
         # https://github.com/marketplace/actions/build-and-push-docker-images
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v7
         continue-on-error: true
         with:
           context: ./
@@ -95,7 +95,7 @@ jobs:
       
       - name: Build and push Jeedom on DockerHub
         # https://github.com/marketplace/actions/build-and-push-docker-images
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v7
         continue-on-error: true
         with:
           context: ./
@@ -115,7 +115,7 @@ jobs:
 
       - name: Build and push Jeedom on Debian:Buster with DB
         # https://github.com/marketplace/actions/build-and-push-docker-images
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v7
         continue-on-error: true
         with:
           context: ./
@@ -138,7 +138,7 @@ jobs:
       
       - name: Build and push Jeedom on Debian:Bookworm with DB
         # https://github.com/marketplace/actions/build-and-push-docker-images
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v7
         continue-on-error: true
         with:
           context: ./
