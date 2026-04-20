@@ -73,7 +73,7 @@ jobs:
         if: steps.generate-baseline.outputs.baseline_changed == 'true'
         uses: peter-evans/create-pull-request@v5
         with:
-          commit-message: Update PHPStan baseline
+          commit-message: '[skip ci] Update PHPStan baseline'
           title: '[CI] Update PHPStan baseline'
           body: |
             Mise à jour automatique du baseline PHPStan suite à la correction d'erreurs.
@@ -87,7 +87,7 @@ jobs:
           reviewers: |
             zoic21
             Hotfirenet
-            tmartinez69009
             Salvialf
             Sekiro-kost
             reineabs
+            Mips2648
