@@ -3,7 +3,6 @@
 ## New core features
 | Merge date | Title | PR |
 | --- | --- | --- |
-| 2026-04-20 11:02:18 | Auto-generated draft of release notes / changelog in develop | [#3278](https://github.com/jeedom/core/pull/3278) |
 | 2026-04-19 15:18:24 | Add healthcheck in the docker container | [#2998](https://github.com/jeedom/core/pull/2998) |
 
 ## Breaking changes
@@ -33,7 +32,9 @@ no entries
 | 2026-04-04 07:56:05 | chore: typo Securité | [#3241](https://github.com/jeedom/core/pull/3241) |
 
 ## Documentations
-no entries
+| Merge date | Title | PR |
+| --- | --- | --- |
+| 2026-04-20 11:02:18 | Auto-generated draft of release notes / changelog in develop | [#3278](https://github.com/jeedom/core/pull/3278) |
 
 ## Developer
 | Merge date | Title | PR |
