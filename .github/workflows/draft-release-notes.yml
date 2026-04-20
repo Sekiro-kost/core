@@ -76,6 +76,28 @@ jobs:
           add_section "Documentations" "changelog-docs"
           add_section "Developer" "changelog-dev"
 
+          echo "## Uncategorized" >> docs/release-notes.md
+          UNCATEGORIZED_ROWS=$(echo "$PRS_JSON" | jq -r '
+            map(select((.title | startswith("[CI]")) | not))
+            | map(select(
+              (any(.labels[]?; (.name | ascii_downcase) == "changelog-feat")) | not and
+              (any(.labels[]?; (.name | ascii_downcase) == "changelog-breaking")) | not and
+              (any(.labels[]?; (.name | ascii_downcase) == "changelog-fix")) | not and
+              (any(.labels[]?; (.name | ascii_downcase) == "changelog-other")) | not and
+              (any(.labels[]?; (.name | ascii_downcase) == "changelog-docs")) | not and
+              (any(.labels[]?; (.name | ascii_downcase) == "changelog-dev")) | not
+            ))
+            | sort_by(.mergedAt) | reverse | .[]
+            | "| \(.mergedAt | fromdateiso8601 | strflocaltime("%Y-%m-%d %H:%M:%S")) | \(.title | gsub("\\|"; "\\\\|")) | [#\(.number)](\(.url)) |"
+          ')
+          if [ -z "$UNCATEGORIZED_ROWS" ]; then
+            echo "no entries" >> docs/release-notes.md
+          else
+            echo "| Merge date | Title | PR |" >> docs/release-notes.md
+            echo "| --- | --- | --- |" >> docs/release-notes.md
+            echo "$UNCATEGORIZED_ROWS" >> docs/release-notes.md
+          fi
+
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TZ: Europe/Paris
