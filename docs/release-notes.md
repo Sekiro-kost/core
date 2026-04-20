@@ -5,6 +5,9 @@
 | --- | --- | --- |
 | 2026-04-19 15:18:24 | Add healthcheck in the docker container | [#2998](https://github.com/jeedom/core/pull/2998) |
 
+## Breaking changes
+no entries
+
 ## Fixes
 | Merge date | Title | PR |
 | --- | --- | --- |
@@ -34,3 +37,4 @@ no entries
 | 2026-04-16 22:32:24 | Use Composer dependency for PHPStan | [#3256](https://github.com/jeedom/core/pull/3256) |
 | 2026-04-13 08:16:53 | feat: improve "do not remove log" feature | [#3245](https://github.com/jeedom/core/pull/3245) |
 | 2026-04-03 15:27:29 | Update GitHub workflows to use 'develop' branch instead of 'alpha' and 'beta' | [#3240](https://github.com/jeedom/core/pull/3240) |
+
