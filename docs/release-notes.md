@@ -44,3 +44,7 @@ no entries
 | 2026-04-13 08:16:53 | feat: improve "do not remove log" feature | [#3245](https://github.com/jeedom/core/pull/3245) |
 | 2026-04-03 15:27:29 | Update GitHub workflows to use 'develop' branch instead of 'alpha' and 'beta' | [#3240](https://github.com/jeedom/core/pull/3240) |
 
+## Uncategorized
+| Merge date | Title | PR |
+| --- | --- | --- |
+| 2026-04-20 11:29:10 | add [skip ci] in commit message to try to avoid execution of others WF | [#3287](https://github.com/jeedom/core/pull/3287) |
