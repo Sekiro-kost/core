@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - develop
-      - feat/changelog-develop
   workflow_dispatch:
 
 permissions:
