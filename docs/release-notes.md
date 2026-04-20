@@ -3,6 +3,7 @@
 ## New core features
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-04-20 11:02:18 | Auto-generated draft of release notes / changelog in develop | [#3278](https://github.com/jeedom/core/pull/3278) |
 | 2026-04-19 15:18:24 | Add healthcheck in the docker container | [#2998](https://github.com/jeedom/core/pull/2998) |
 
 ## Breaking changes
@@ -34,6 +35,7 @@ no entries
 ## Developer
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-04-20 11:01:32 | add dependabot only for github-actions at first | [#3239](https://github.com/jeedom/core/pull/3239) |
 | 2026-04-17 21:11:17 | new workflow for translations | [#3251](https://github.com/jeedom/core/pull/3251) |
 | 2026-04-17 12:26:56 | Fix PHPStan workflow on branch deletion | [#3263](https://github.com/jeedom/core/pull/3263) |
 | 2026-04-16 22:32:24 | Use Composer dependency for PHPStan | [#3256](https://github.com/jeedom/core/pull/3256) |
