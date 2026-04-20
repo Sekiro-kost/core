@@ -28,6 +28,7 @@ no entries
 ## Others
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-04-20 11:50:35 | Update translations | [#3285](https://github.com/jeedom/core/pull/3285) |
 | 2026-04-08 09:16:23 | chore: Correction *aucun* script | [#3246](https://github.com/jeedom/core/pull/3246) |
 | 2026-04-04 07:56:05 | chore: typo Securité | [#3241](https://github.com/jeedom/core/pull/3241) |
 
@@ -38,6 +39,7 @@ no entries
 | Merge date | Title | PR |
 | --- | --- | --- |
 | 2026-04-20 11:38:39 | Bump actions/cache from 3 to 5 | [#3283](https://github.com/jeedom/core/pull/3283) |
+| 2026-04-20 11:29:10 | add [skip ci] in commit message to try to avoid execution of others WF | [#3287](https://github.com/jeedom/core/pull/3287) |
 | 2026-04-20 11:01:32 | add dependabot only for github-actions at first | [#3239](https://github.com/jeedom/core/pull/3239) |
 | 2026-04-17 21:11:17 | new workflow for translations | [#3251](https://github.com/jeedom/core/pull/3251) |
 | 2026-04-17 12:26:56 | Fix PHPStan workflow on branch deletion | [#3263](https://github.com/jeedom/core/pull/3263) |
@@ -45,7 +47,3 @@ no entries
 | 2026-04-13 08:16:53 | feat: improve "do not remove log" feature | [#3245](https://github.com/jeedom/core/pull/3245) |
 | 2026-04-03 15:27:29 | Update GitHub workflows to use 'develop' branch instead of 'alpha' and 'beta' | [#3240](https://github.com/jeedom/core/pull/3240) |
 
-## Uncategorized
-| Merge date | Title | PR |
-| --- | --- | --- |
-| 2026-04-20 11:29:10 | add [skip ci] in commit message to try to avoid execution of others WF | [#3287](https://github.com/jeedom/core/pull/3287) |
