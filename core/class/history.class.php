@@ -322,7 +322,7 @@ class history {
 					continue;
 				}
 				$mode = $cmd->getConfiguration('historizeMode', 'avg');
-				if (!in_array($mode, array('avg', 'min', 'max', 'none'))) {
+				if (!in_array($mode, array('avg', 'min', 'max'))) {
 					$mode = 'avg';
 				}
 				$values = array(
