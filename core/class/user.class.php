@@ -56,51 +56,51 @@ class user {
 	public static function connect(string $_login, string $_mdp) {
 		$sMdp = (!is_sha512($_mdp)) ? sha512($_mdp) : $_mdp;
 		if (config::byKey('ldap:enable') == '1' && function_exists('ldap_connect')) {
-			log::add("connection", "info", __('LDAP Authentification', __FILE__));
+			log::add("connection", "info", 'LDAP Authentification', __FILE__);
 			$ad = ldap_connect(config::byKey('ldap:host'), config::byKey('ldap:port'));
 			if (!$ad) {
-				log::add("connection", "info", __('Connection LDAP Error', __FILE__));
+				log::add("connection", "info", 'Connection LDAP Error', __FILE__);
 				return false;
 			}
-			log::add("connection", "info", __('LDAP Connection OK', __FILE__));
+			log::add("connection", "info", 'LDAP Connection OK', __FILE__);
 			ldap_set_option($ad, LDAP_OPT_PROTOCOL_VERSION, 3);
 			ldap_set_option($ad, LDAP_OPT_REFERRALS, 0);
 			if (config::byKey('ldap:tls')) {
 				if (!ldap_start_tls($ad)) {
-					log::add("connection", "debug", __('start TLS KO', __FILE__));
+					log::add("connection", "debug", 'start TLS KO', __FILE__);
 					return false;
 				} else {
-					log::add("connection", "debug", __('start TLS OK', __FILE__));
+					log::add("connection", "debug", 'start TLS OK', __FILE__);
 				}
 			}
 			if (config::byKey('ldap:samba4')) {
 				if (!ldap_bind($ad, $_login . '@' . config::byKey('ldap:domain'), $_mdp)) {
-					log::add("connection", "info", __('LDAP bind user - login/password denied', __FILE__));
+					log::add("connection", "info", 'LDAP bind user - login/password denied', __FILE__);
 					return false;
 				}
 			} else {
 				if (!ldap_bind($ad, config::byKey('ldap::usersearch') . '=' . $_login . ',' . config::byKey('ldap:basedn'), $_mdp)) {
-					log::add("connection", "info", __('LDAP bind user - login/password denied', __FILE__));
+					log::add("connection", "info", 'LDAP bind user - login/password denied', __FILE__);
 					return false;
 				}
 			}
-			log::add("connection", "debug", __('LDAP Bind user - OK', __FILE__));
+			log::add("connection", "debug", 'LDAP Bind user - OK', __FILE__);
 			if (config::bykey('ldap:filter:admin') == "" && config::bykey('ldap:filter:user') == "" && config::bykey('ldap:filter:restrict') == "") {
-				log::add("connection", "warning", __('LDAP Profile Check - [WARNING] None filter was set, "', __FILE__) . $_login . __('"  authenticated as an administrator', __FILE__));
+				log::add("connection", "warning", 'LDAP Profile Check - [WARNING] None filter was set, "' . $_login . '"  authenticated as an administrator');
 				$profile = 'admin';
 			} else {
 				foreach (array('admin', 'user', 'restrict', 'none') as $profile) {
 					if ($profile == 'none') {
-						log::add("connection", "warning", __('LDAP Profile Check - [WARNING] No profile has been set for "', __FILE__) . $_login . __('" user in the LDAP', __FILE__));
+						log::add("connection", "warning", 'LDAP Profile Check - [WARNING] No profile has been set for "' . $_login . '" user in the LDAP');
 						break;
 					}
 					if (config::bykey('ldap:filter:' . $profile) != "") {
 						$filters = '(&(' . config::bykey('ldap::usersearch') . '=' . $_login . ')' . config::bykey('ldap:filter:' . $profile) . ')';
-						log::add("connection", "debug", __('LDAP Profile Check - filter:, "' . $filters . '"', __FILE__));
+						log::add("connection", "debug", 'LDAP Profile Check - filter:, "' . $filters . '"');
 						$result = ldap_search($ad, config::byKey('ldap:basedn'), $filters);
 						$entries = ldap_get_entries($ad, $result);
 						if ($entries['count'] > 0) {
-							log::add("connection", "info", __('LDAP Profile Check - The "', __FILE__) . $profile . __('" profile was FOUND for "', __FILE__) . $_login . __('" user in the LDAP', __FILE__));
+							log::add("connection", "info", 'LDAP Profile Check - The "' . $profile . '" profile was FOUND for "' . $_login . '" user in the LDAP');
 							break;
 						}
 					}
@@ -276,10 +276,10 @@ class user {
 
 	public static function failedLogin(): void {
 		$current_ip = getClientIp();
-		$failed_login = cache::byKey('security::failed_login::'.$current_ip);
-		cache::set('security::failed_login::'.$current_ip,($failed_login->getValue(0)+1), config::byKey('security::timeLoginFailed'));
-		if(($failed_login->getValue(0)+1) > config::byKey('security::maxFailedLogin')){
-		    $ban_ips = json_decode(cache::byKey('security::banip')->getValue('[]'), true);
+		$failed_login = cache::byKey('security::failed_login::' . $current_ip);
+		cache::set('security::failed_login::' . $current_ip, ($failed_login->getValue(0) + 1), config::byKey('security::timeLoginFailed'));
+		if (($failed_login->getValue(0) + 1) > config::byKey('security::maxFailedLogin')) {
+			$ban_ips = json_decode(cache::byKey('security::banip')->getValue('[]'), true);
 			$ban_ips[$current_ip] = strtotime('now');
 			cache::set('security::banip', json_encode($ban_ips));
 		}
@@ -309,13 +309,13 @@ class user {
 		}
 		if (count($ban_ips) > 0 && is_int(intval(config::byKey('security::bantime')))) {
 			foreach ($ban_ips as $ip => $datetime) {
-				if(!is_int(intval($datetime))){
+				if (!is_int(intval($datetime))) {
 					continue;
 				}
 				if (intval(config::byKey('security::bantime')) == -1 || intval($datetime) + intval(config::byKey('security::bantime')) > strtotime('now')) {
 					if ($ip == $current_ip) {
 						jeedom::event('ip_ban', false, ['ip' => $ip, 'datetime' => intval($datetime)]);
-                      	return true;
+						return true;
 					}
 					continue;
 				}
