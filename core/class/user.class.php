@@ -56,7 +56,7 @@ class user {
 	public static function connect(string $_login, string $_mdp) {
 		$sMdp = (!is_sha512($_mdp)) ? sha512($_mdp) : $_mdp;
 		if (config::byKey('ldap:enable') == '1' && function_exists('ldap_connect')) {
-			log::add("connection", "info", 'LDAP Authentification', __FILE__);
+			log::add("connection", "info", 'LDAP Authentication', __FILE__);
 			$ad = ldap_connect(config::byKey('ldap:host'), config::byKey('ldap:port'));
 			if (!$ad) {
 				log::add("connection", "info", 'Connection LDAP Error', __FILE__);
