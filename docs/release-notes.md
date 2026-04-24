@@ -1,9 +1,7 @@
 # All changes since release 4.5.3
 
 ## New core features
-| Merge date | Title | PR |
-| --- | --- | --- |
-| 2026-04-19 15:18:24 | Add healthcheck in the docker container | [#2998](https://github.com/jeedom/core/pull/2998) |
+no entries
 
 ## Breaking changes
 no entries
@@ -13,7 +11,6 @@ no entries
 | --- | --- | --- |
 | 2026-04-21 11:24:20 | fix: prevent a possible SQL injection in archive process | [#3268](https://github.com/jeedom/core/pull/3268) |
 | 2026-04-20 11:11:26 | Fix: scenario expression execute without scenario | [#3228](https://github.com/jeedom/core/pull/3228) |
-| 2026-04-20 11:03:03 | Fix undefined  variable in AJAX remove after market→repo migration | [#3118](https://github.com/jeedom/core/pull/3118) |
 | 2026-04-19 20:34:27 | Rename count variable to count_functionality | [#3273](https://github.com/jeedom/core/pull/3273) |
 | 2026-04-19 08:25:34 | fix: prevent a possible SQL injection in setComponentOrder | [#3267](https://github.com/jeedom/core/pull/3267) |
 | 2026-04-17 15:14:11 | fix: display_name field (ui) | [#3262](https://github.com/jeedom/core/pull/3262) |
@@ -40,6 +37,8 @@ no entries
 ## Developer
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-04-24 15:03:36 | Bump docker/login-action from 2 to 4 | [#3280](https://github.com/jeedom/core/pull/3280) |
+| 2026-04-24 15:03:23 | Bump docker/build-push-action from 3 to 7 | [#3281](https://github.com/jeedom/core/pull/3281) |
 | 2026-04-24 14:54:09 | Bump docker/setup-buildx-action from 2 to 4 | [#3282](https://github.com/jeedom/core/pull/3282) |
 | 2026-04-24 14:03:50 | remove french translations from others languages file | [#3290](https://github.com/jeedom/core/pull/3290) |
 | 2026-04-20 11:38:39 | Bump actions/cache from 3 to 5 | [#3283](https://github.com/jeedom/core/pull/3283) |
