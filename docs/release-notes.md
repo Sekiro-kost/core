@@ -20,7 +20,6 @@ no entries
 | 2026-04-16 13:05:53 | Fix: issue displaying history if grouping type is set | [#3242](https://github.com/jeedom/core/pull/3242) |
 | 2026-04-03 08:46:58 | fix: randText function | [#3197](https://github.com/jeedom/core/pull/3197) |
 | 2026-04-02 14:13:11 | fix: resolve 3 bugs in proxy configuration in jsonrpcClient | [#3238](https://github.com/jeedom/core/pull/3238) |
-| 2026-03-31 20:51:42 | fix: graphUpdate function in history class | [#3178](https://github.com/jeedom/core/pull/3178) |
 
 ## Others
 | Merge date | Title | PR |
@@ -37,6 +36,7 @@ no entries
 ## Developer
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-04-24 15:04:14 | Bump docker/setup-qemu-action from 2 to 4 | [#3279](https://github.com/jeedom/core/pull/3279) |
 | 2026-04-24 15:03:36 | Bump docker/login-action from 2 to 4 | [#3280](https://github.com/jeedom/core/pull/3280) |
 | 2026-04-24 15:03:23 | Bump docker/build-push-action from 3 to 7 | [#3281](https://github.com/jeedom/core/pull/3281) |
 | 2026-04-24 14:54:09 | Bump docker/setup-buildx-action from 2 to 4 | [#3282](https://github.com/jeedom/core/pull/3282) |
