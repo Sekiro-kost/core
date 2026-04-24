@@ -40,6 +40,7 @@ no entries
 ## Developer
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-04-24 14:03:50 | remove french translations from others languages file | [#3290](https://github.com/jeedom/core/pull/3290) |
 | 2026-04-20 11:38:39 | Bump actions/cache from 3 to 5 | [#3283](https://github.com/jeedom/core/pull/3283) |
 | 2026-04-20 11:29:10 | add [skip ci] in commit message to try to avoid execution of others WF | [#3287](https://github.com/jeedom/core/pull/3287) |
 | 2026-04-20 11:01:32 | add dependabot only for github-actions at first | [#3239](https://github.com/jeedom/core/pull/3239) |
