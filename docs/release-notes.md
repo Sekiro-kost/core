@@ -22,6 +22,7 @@ no entries
 ## Others
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-04-25 08:04:11 | Update translations | [#3295](https://github.com/jeedom/core/pull/3295) |
 | 2026-04-25 07:30:36 | Update translations | [#3293](https://github.com/jeedom/core/pull/3293) |
 | 2026-04-20 11:50:35 | Update translations | [#3285](https://github.com/jeedom/core/pull/3285) |
 | 2026-04-08 09:16:23 | chore: Correction *aucun* script | [#3246](https://github.com/jeedom/core/pull/3246) |
@@ -35,7 +36,6 @@ no entries
 ## Developer
 | Merge date | Title | PR |
 | --- | --- | --- |
-| 2026-04-25 08:04:11 | Update translations | [#3295](https://github.com/jeedom/core/pull/3295) |
 | 2026-04-24 17:12:16 | don't use core translations | [#3294](https://github.com/jeedom/core/pull/3294) |
 | 2026-04-24 15:04:14 | Bump docker/setup-qemu-action from 2 to 4 | [#3279](https://github.com/jeedom/core/pull/3279) |
 | 2026-04-24 15:03:36 | Bump docker/login-action from 2 to 4 | [#3280](https://github.com/jeedom/core/pull/3280) |
