@@ -35,6 +35,7 @@ no entries
 ## Developer
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-04-25 08:04:11 | Update translations | [#3295](https://github.com/jeedom/core/pull/3295) |
 | 2026-04-24 17:12:16 | don't use core translations | [#3294](https://github.com/jeedom/core/pull/3294) |
 | 2026-04-24 15:04:14 | Bump docker/setup-qemu-action from 2 to 4 | [#3279](https://github.com/jeedom/core/pull/3279) |
 | 2026-04-24 15:03:36 | Bump docker/login-action from 2 to 4 | [#3280](https://github.com/jeedom/core/pull/3280) |
@@ -49,7 +50,3 @@ no entries
 | 2026-04-13 08:16:53 | feat: improve "do not remove log" feature | [#3245](https://github.com/jeedom/core/pull/3245) |
 | 2026-04-03 15:27:29 | Update GitHub workflows to use 'develop' branch instead of 'alpha' and 'beta' | [#3240](https://github.com/jeedom/core/pull/3240) |
 
-## Uncategorized
-| Merge date | Title | PR |
-| --- | --- | --- |
-| 2026-04-25 08:04:11 | Update translations | [#3295](https://github.com/jeedom/core/pull/3295) |
