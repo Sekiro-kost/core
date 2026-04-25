@@ -10,7 +10,6 @@ no entries
 | Merge date | Title | PR |
 | --- | --- | --- |
 | 2026-04-21 11:24:20 | fix: prevent a possible SQL injection in archive process | [#3268](https://github.com/jeedom/core/pull/3268) |
-| 2026-04-20 11:11:26 | Fix: scenario expression execute without scenario | [#3228](https://github.com/jeedom/core/pull/3228) |
 | 2026-04-19 20:34:27 | Rename count variable to count_functionality | [#3273](https://github.com/jeedom/core/pull/3273) |
 | 2026-04-19 08:25:34 | fix: prevent a possible SQL injection in setComponentOrder | [#3267](https://github.com/jeedom/core/pull/3267) |
 | 2026-04-17 15:14:11 | fix: display_name field (ui) | [#3262](https://github.com/jeedom/core/pull/3262) |
@@ -23,6 +22,7 @@ no entries
 ## Others
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-04-25 07:30:36 | Update translations | [#3293](https://github.com/jeedom/core/pull/3293) |
 | 2026-04-20 11:50:35 | Update translations | [#3285](https://github.com/jeedom/core/pull/3285) |
 | 2026-04-08 09:16:23 | chore: Correction *aucun* script | [#3246](https://github.com/jeedom/core/pull/3246) |
 | 2026-04-04 07:56:05 | chore: typo Securité | [#3241](https://github.com/jeedom/core/pull/3241) |
