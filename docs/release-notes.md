@@ -9,6 +9,7 @@ no entries
 ## Fixes
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-04-25 08:00:07 | Fix: translations string concatenation | [#3289](https://github.com/jeedom/core/pull/3289) |
 | 2026-04-21 11:24:20 | fix: prevent a possible SQL injection in archive process | [#3268](https://github.com/jeedom/core/pull/3268) |
 | 2026-04-19 20:34:27 | Rename count variable to count_functionality | [#3273](https://github.com/jeedom/core/pull/3273) |
 | 2026-04-19 08:25:34 | fix: prevent a possible SQL injection in setComponentOrder | [#3267](https://github.com/jeedom/core/pull/3267) |
@@ -17,7 +18,6 @@ no entries
 | 2026-04-17 09:35:39 | fix: Suppression des arguments superflus dans les appels de méthodes (PHPStan lvl 1) | [#3258](https://github.com/jeedom/core/pull/3258) |
 | 2026-04-17 09:35:16 | fix: Correction des méthodes statiques et du nommage de classes (PHPStan lvl 1) | [#3259](https://github.com/jeedom/core/pull/3259) |
 | 2026-04-16 13:05:53 | Fix: issue displaying history if grouping type is set | [#3242](https://github.com/jeedom/core/pull/3242) |
-| 2026-04-02 14:13:11 | fix: resolve 3 bugs in proxy configuration in jsonrpcClient | [#3238](https://github.com/jeedom/core/pull/3238) |
 
 ## Others
 | Merge date | Title | PR |
