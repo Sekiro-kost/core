@@ -1633,7 +1633,7 @@ function filterOptions() {
     })
 }
 
-input.addEventListener('input', filterOptions) 
+input.addEventListener('input', filterOptions)
 
 select.addEventListener('change', function(event) {
   document.querySelectorAll('.addElementTypeDescription').unseen()
@@ -1999,11 +1999,11 @@ document.getElementById('div_editScenario').querySelector('div.floatingbar').add
       _target.setAttribute('data-state', '1')
       //open code blocks for later search:
       document.querySelectorAll('#div_scenarioElement div.elementCODE.elementCollapse').forEach(_code => {
-          _code.classList.remove('elementCollapse');
-          const textarea = _code.querySelector('textarea[data-l1key="expression"]');
-          if (textarea) {
-            textarea.style.display = 'block';
-          }
+        _code.classList.remove('elementCollapse')
+        const textarea = _code.querySelector('textarea[data-l1key="expression"]')
+        if (textarea) {
+          textarea.style.display = 'block'
+        }
       })
       jeeP.setEditors()
       document.querySelectorAll('textarea[data-l1key="expression"]').unseen()
@@ -2044,14 +2044,6 @@ document.getElementById('div_editScenario').querySelector('div.floatingbar').add
 //_________________General tab events:
 document.getElementById('generaltab').addEventListener('click', function(event) {
   var _target = null
-  if (_target = event.target.closest('.scenarioAttr[data-l2key="timeline::enable"]')) {
-    if (_target.checked) {
-      document.querySelector('.scenarioAttr[data-l2key="timeline::folder"]').seen()
-    } else {
-      document.querySelector('.scenarioAttr[data-l2key="timeline::folder"]').unseen()
-    }
-    return
-  }
 
   if (_target = event.target.closest('.scenario_link')) {
     jeedomUtils.hideAlert()
@@ -2149,6 +2141,18 @@ document.getElementById('generaltab').addEventListener('click', function(event) 
   }
 })
 
+document.getElementById('generaltab').addEventListener('change', function(event) {
+  var _target = null
+  if (_target = event.target.closest('.scenarioAttr[data-l2key="timeline::enable"]')) {
+    if (_target.checked) {
+      document.querySelector('.scenarioAttr[data-l2key="timeline::folder"]').seen()
+    } else {
+      document.querySelector('.scenarioAttr[data-l2key="timeline::folder"]').unseen()
+    }
+    return
+  }
+})
+
 document.getElementById('generaltab').addEventListener('mouseup', function(event) {
   if (event.target.matches('.scenario_link')) {
     if (event.which == 2) {
@@ -2213,11 +2217,11 @@ document.getElementById('scenariotab').addEventListener('click', function(event)
     return
   }
 
-  if (_target = event.target.closest('#bt_cancelElementSave'))  {
+  if (_target = event.target.closest('#bt_cancelElementSave')) {
     jeeDialog.modal(document.getElementById('md_addElement'))._jeeDialog.hide()
   }
 
-  if (_target = event.target.closest('#bt_crossElementSave'))  {
+  if (_target = event.target.closest('#bt_crossElementSave')) {
     jeeDialog.modal(document.getElementById('md_addElement'))._jeeDialog.hide()
   }
 
