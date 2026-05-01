@@ -55,8 +55,8 @@ if (!isset(jeedom.cache.getConfiguration)) {
 }
 
 jeedom.changes = function() {
-  const paramsRequired =[]
-  const paramsSpecifics ={
+  const paramsRequired = []
+  const paramsSpecifics = {
     global: false,
     noDisplayError: true,
     success: function(data) {
@@ -377,8 +377,8 @@ jeedom.notify = function(_title, _text, _class_name) {
 }
 
 jeedom.getStringUsedBy = function(_params) {
-  const paramsRequired =['search']
-  const paramsSpecifics ={}
+  const paramsRequired = ['search']
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -396,8 +396,8 @@ jeedom.getStringUsedBy = function(_params) {
 }
 
 jeedom.getIdUsedBy = function(_params) {
-  const paramsRequired =['search']
-  const paramsSpecifics ={}
+  const paramsRequired = ['search']
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -415,8 +415,8 @@ jeedom.getIdUsedBy = function(_params) {
 }
 
 jeedom.getConfiguration = function(_params) {
-  const paramsRequired =['key']
-  const paramsSpecifics ={
+  const paramsRequired = ['key']
+  const paramsSpecifics = {
     pre_success: function(data) {
       jeedom.cache.getConfiguration = data.result
       const keys = _params.key.split(':')
@@ -457,8 +457,8 @@ jeedom.getConfiguration = function(_params) {
 }
 
 jeedom.getInfoApplication = function(_params) {
-  const paramsRequired =[]
-  const paramsSpecifics ={}
+  const paramsRequired = []
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -475,8 +475,8 @@ jeedom.getInfoApplication = function(_params) {
 }
 
 jeedom.haltSystem = function(_params) {
-  const paramsRequired =[]
-  const paramsSpecifics ={}
+  const paramsRequired = []
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -499,8 +499,8 @@ jeedom.ssh = function(_params) {
     command = _params
     _params = {}
   }
-  const paramsRequired =[]
-  const paramsSpecifics ={}
+  const paramsRequired = []
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -525,8 +525,8 @@ jeedom.db = function(_params) {
     command = _params
     _params = {}
   }
-  const paramsRequired =[]
-  const paramsSpecifics ={}
+  const paramsRequired = []
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -545,8 +545,8 @@ jeedom.db = function(_params) {
 }
 
 jeedom.dbcorrectTable = function(_params) {
-  const paramsRequired =['table']
-  const paramsSpecifics ={}
+  const paramsRequired = ['table']
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -564,8 +564,8 @@ jeedom.dbcorrectTable = function(_params) {
 }
 
 jeedom.rebootSystem = function(_params) {
-  const paramsRequired =[]
-  const paramsSpecifics ={}
+  const paramsRequired = []
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -582,8 +582,8 @@ jeedom.rebootSystem = function(_params) {
 }
 
 jeedom.systemCorrectPackage = function(_params) {
-  const paramsRequired =['package']
-  const paramsSpecifics ={}
+  const paramsRequired = ['package']
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -601,8 +601,8 @@ jeedom.systemCorrectPackage = function(_params) {
 }
 
 jeedom.health = function(_params) {
-  const paramsRequired =[]
-  const paramsSpecifics ={}
+  const paramsRequired = []
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -619,8 +619,8 @@ jeedom.health = function(_params) {
 }
 
 jeedom.forceSyncHour = function(_params) {
-  const paramsRequired =[]
-  const paramsSpecifics ={}
+  const paramsRequired = []
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -719,8 +719,8 @@ jeedom.getSelectActionModal = function(_options, _callback) {
 }
 
 jeedom.getGraphData = function(_params) {
-  const paramsRequired =[]
-  const paramsSpecifics ={}
+  const paramsRequired = []
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -739,8 +739,8 @@ jeedom.getGraphData = function(_params) {
 }
 
 jeedom.getDocumentationUrl = function(_params) {
-  const paramsRequired =[]
-  const paramsSpecifics ={}
+  const paramsRequired = []
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -760,8 +760,8 @@ jeedom.getDocumentationUrl = function(_params) {
 }
 
 jeedom.addWarnme = function(_params) {
-  const paramsRequired =[]
-  const paramsSpecifics ={}
+  const paramsRequired = []
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -780,8 +780,8 @@ jeedom.addWarnme = function(_params) {
 }
 
 jeedom.getFileFolder = function(_params) {
-  const paramsRequired =['type', 'path']
-  const paramsSpecifics ={}
+  const paramsRequired = ['type', 'path']
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -800,8 +800,8 @@ jeedom.getFileFolder = function(_params) {
 }
 
 jeedom.getFileContent = function(_params) {
-  const paramsRequired =['path']
-  const paramsSpecifics ={}
+  const paramsRequired = ['path']
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -819,8 +819,8 @@ jeedom.getFileContent = function(_params) {
 }
 
 jeedom.setFileContent = function(_params) {
-  const paramsRequired =['path', 'content']
-  const paramsSpecifics ={}
+  const paramsRequired = ['path', 'content']
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -839,8 +839,8 @@ jeedom.setFileContent = function(_params) {
 }
 
 jeedom.deleteFile = function(_params) {
-  const paramsRequired =['path']
-  const paramsSpecifics ={}
+  const paramsRequired = ['path']
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -858,8 +858,8 @@ jeedom.deleteFile = function(_params) {
 }
 
 jeedom.createFolder = function(_params) {
-  const paramsRequired =['path', 'name']
-  const paramsSpecifics ={}
+  const paramsRequired = ['path', 'name']
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -878,8 +878,8 @@ jeedom.createFolder = function(_params) {
 }
 
 jeedom.renameFolder = function(_params) {
-  const paramsRequired =['src', 'dst']
-  const paramsSpecifics ={}
+  const paramsRequired = ['src', 'dst']
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -898,8 +898,8 @@ jeedom.renameFolder = function(_params) {
 }
 
 jeedom.deleteFolder = function(_params) {
-  const paramsRequired =['path']
-  const paramsSpecifics ={}
+  const paramsRequired = ['path']
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -917,8 +917,8 @@ jeedom.deleteFolder = function(_params) {
 }
 
 jeedom.createFile = function(_params) {
-  const paramsRequired =['path', 'name']
-  const paramsSpecifics ={}
+  const paramsRequired = ['path', 'name']
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -937,8 +937,8 @@ jeedom.createFile = function(_params) {
 }
 
 jeedom.emptyRemoveHistory = function(_params) {
-  const paramsRequired =[]
-  const paramsSpecifics ={}
+  const paramsRequired = []
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -955,8 +955,8 @@ jeedom.emptyRemoveHistory = function(_params) {
 }
 
 jeedom.version = function(_params) {
-  const paramsRequired =[]
-  const paramsSpecifics ={}
+  const paramsRequired = []
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -973,8 +973,8 @@ jeedom.version = function(_params) {
 }
 
 jeedom.removeImageIcon = function(_params) {
-  const paramsRequired =['filepath']
-  const paramsSpecifics ={}
+  const paramsRequired = ['filepath']
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -992,8 +992,8 @@ jeedom.removeImageIcon = function(_params) {
 }
 
 jeedom.cleanFileSystemRight = function(_params) {
-  const paramsRequired =[]
-  const paramsSpecifics ={}
+  const paramsRequired = []
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -1010,8 +1010,8 @@ jeedom.cleanFileSystemRight = function(_params) {
 }
 
 jeedom.consistency = function(_params) {
-  const paramsRequired =[]
-  const paramsSpecifics ={}
+  const paramsRequired = []
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -1028,8 +1028,8 @@ jeedom.consistency = function(_params) {
 }
 
 jeedom.cleanDatabase = function(_params) {
-  const paramsRequired =[]
-  const paramsSpecifics ={}
+  const paramsRequired = []
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -1046,8 +1046,8 @@ jeedom.cleanDatabase = function(_params) {
 }
 
 jeedom.massEditSave = function(_params) {
-  const paramsRequired =['type', 'objects']
-  const paramsSpecifics ={}
+  const paramsRequired = ['type', 'objects']
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -1066,8 +1066,8 @@ jeedom.massEditSave = function(_params) {
 }
 
 jeedom.massReplace = function(_params) {
-  const paramsRequired =['options', 'eqlogics', 'cmds']
-  const paramsSpecifics ={}
+  const paramsRequired = ['options', 'eqlogics', 'cmds']
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -1087,8 +1087,8 @@ jeedom.massReplace = function(_params) {
 }
 
 jeedom.systemGetUpgradablePackage = function(_params) {
-  const paramsRequired =['type']
-  const paramsSpecifics ={}
+  const paramsRequired = ['type']
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
@@ -1107,8 +1107,8 @@ jeedom.systemGetUpgradablePackage = function(_params) {
 }
 
 jeedom.systemUpgradablePackage = function(_params) {
-  const paramsRequired =['type']
-  const paramsSpecifics ={}
+  const paramsRequired = ['type']
+  const paramsSpecifics = {}
   try {
     jeedom.private.checkParamsRequired(_params || {}, paramsRequired)
   } catch (e) {
