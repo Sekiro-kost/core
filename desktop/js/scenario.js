@@ -1614,6 +1614,14 @@ document.querySelector('.scenarioAttr[data-l1key="mode"]').addEventListener('cha
   }
 })
 
+document.querySelector('.scenarioAttr[data-l2key="timeline::enable"]').addEventListener('change', function(event) {
+  if (this.checked) {
+    document.querySelector('.scenarioAttr[data-l2key="timeline::folder"]').seen()
+  } else {
+    document.querySelector('.scenarioAttr[data-l2key="timeline::folder"]').unseen()
+  }
+})
+
 var select = document.getElementById('in_addElementType')
 var input = document.getElementById('in_addElementTypeFilter')
 var allOptions = Array.from(select.options)
@@ -2137,18 +2145,6 @@ document.getElementById('generaltab').addEventListener('click', function(event) 
     }, function(result) {
       _target.closest('.trigger').querySelector('.scenarioAttr[data-l1key="trigger"]').jeeValue('#' + result.human + '#')
     })
-    return
-  }
-})
-
-document.getElementById('generaltab').addEventListener('change', function(event) {
-  var _target = null
-  if (_target = event.target.closest('.scenarioAttr[data-l2key="timeline::enable"]')) {
-    if (_target.checked) {
-      document.querySelector('.scenarioAttr[data-l2key="timeline::folder"]').seen()
-    } else {
-      document.querySelector('.scenarioAttr[data-l2key="timeline::folder"]').unseen()
-    }
     return
   }
 })
