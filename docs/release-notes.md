@@ -11,6 +11,7 @@ no entries
 ## Fixes
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-05-04 10:02:20 | Fix timeline folder field visibility on scenario page load | [#3305](https://github.com/jeedom/core/pull/3305) |
 | 2026-04-25 08:00:07 | Fix: translations string concatenation | [#3289](https://github.com/jeedom/core/pull/3289) |
 | 2026-04-21 11:24:20 | fix: prevent a possible SQL injection in archive process | [#3268](https://github.com/jeedom/core/pull/3268) |
 | 2026-04-20 11:11:26 | Fix: scenario expression execute without scenario | [#3228](https://github.com/jeedom/core/pull/3228) |
