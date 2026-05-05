@@ -37,23 +37,27 @@ if (!jeeFrontEnd.log) {
 
 //searching
 document.getElementById('in_searchLogFilter')?.addEventListener('keyup', function(event) {
-  const raw = event.target.value
-  if (raw == '') {
+  let search = event.target.value
+  if (search == '') {
     jeeP.logListButtons.seen()
     return
   }
-
-  const terms = raw.split(',').map(t => t.trim()).filter(t => t.length > 0)
-
+  const not = search.startsWith(":not(")
+  if (not) {
+    search = search.replace(':not(', '')
+  }
+  search = jeedomUtils.normTextLower(search)
   jeeP.logListButtons.unseen()
   jeeP.logListButtons.forEach(_bt => {
+    let match = false
     const text = jeedomUtils.normTextLower(_bt.textContent)
-    const match = terms.some(term => {
-      const not = term.startsWith(':not(')
-      const search = jeedomUtils.normTextLower(not ? term.slice(5, -1) : term)
-      return not ? !text.includes(search) : text.includes(search)
-    })
-    if (match) _bt.seen()
+    if (text.includes(search)) {
+      match = true
+    }
+    if (not) match = !match
+    if (match) {
+      _bt.seen()
+    }
   })
 })
 
