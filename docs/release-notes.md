@@ -44,6 +44,9 @@ no entries
 ## Developer
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-05-05 10:21:10 | Bump peter-evans/create-pull-request from 5 to 8 | [#3307](https://github.com/jeedom/core/pull/3307) |
+| 2026-05-05 10:20:50 | Bump actions/github-script from 7 to 9 | [#3308](https://github.com/jeedom/core/pull/3308) |
+| 2026-05-05 10:20:32 | Bump actions/checkout from 2 to 6 | [#3309](https://github.com/jeedom/core/pull/3309) |
 | 2026-04-25 11:58:25 | Increase PR list limit to 1000 iso 30 by default | [#3296](https://github.com/jeedom/core/pull/3296) |
 | 2026-04-24 17:12:16 | don't use core translations | [#3294](https://github.com/jeedom/core/pull/3294) |
 | 2026-04-24 15:04:14 | Bump docker/setup-qemu-action from 2 to 4 | [#3279](https://github.com/jeedom/core/pull/3279) |
