@@ -44,6 +44,7 @@ no entries
 ## Developer
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-05-05 17:04:02 | Refactor var to const/let in core JS utilities (1/4) | [#3300](https://github.com/jeedom/core/pull/3300) |
 | 2026-05-05 17:02:29 | Refactor var to const/let in UI rendering files (3/4) | [#3302](https://github.com/jeedom/core/pull/3302) |
 | 2026-05-05 14:28:06 | add log in plugin autoloader | [#3276](https://github.com/jeedom/core/pull/3276) |
 | 2026-05-05 10:21:10 | Bump peter-evans/create-pull-request from 5 to 8 | [#3307](https://github.com/jeedom/core/pull/3307) |
