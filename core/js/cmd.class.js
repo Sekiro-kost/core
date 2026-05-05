@@ -58,8 +58,8 @@ jeedom.cmd.execute = function(_params) {
   let eqLogic = null
   if (notify) {
     eqLogic = document.querySelector('.cmd[data-cmd_id="' + _params.id + '"]')?.closest('div.eqLogic-widget') ?? null
-  }
   if (eqLogic) jeedom.cmd.notifyEq(eqLogic, false)
+}
   if (_params.value != 'undefined' && (is_array(_params.value) || is_object(_params.value))) {
     _params.value = JSON.stringify(_params.value)
   }
