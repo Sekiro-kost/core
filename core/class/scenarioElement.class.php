@@ -227,6 +227,7 @@ class scenarioElement {
 				return;
 			}
 			$endTime = time() + 3600;
+			$return = false;
 			while ($result) {
 				$return = $this->getSubElement('do')->execute($_scenario);
 				if (time() > $endTime) {
