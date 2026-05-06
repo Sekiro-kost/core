@@ -940,10 +940,13 @@ class jeedom {
 	}
 
 	public static function version() {
-		if (file_exists(__DIR__ . '/../config/version')) {
-			return trim(file_get_contents(__DIR__ . '/../config/version'));
+		static $version = null;
+		if ($version !== null) {
+			return $version;
 		}
-		return '';
+		$path = __DIR__ . '/../config/version';
+		$version = file_exists($path) ? trim(file_get_contents($path)) : '';
+		return $version;
 	}
 
 	/**********************START AND DATE MANAGEMENT*************************************************************/
