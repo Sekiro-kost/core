@@ -172,6 +172,7 @@ class log extends AbstractLogger {
 		if (filesize($rawPath) < $maxBytes) {
 			$output = trim(com_shell::execute("wc -l < " . escapeshellarg($rawPath)));
 			if (ctype_digit($output) && (int)$output <= $maxLineLog) {
+				// file is smaller than max size and has less lines than max lines, no need to chunk it
 				return;
 			}
 		}
