@@ -156,7 +156,7 @@ class log extends AbstractLogger {
 	}
 
 	private static function chunkLog(string $rawPath) {
-		if (strpos($rawPath, '.htaccess') !== false || !file_exists($rawPath)) {
+		if (strpos($rawPath, '.htaccess') !== false) {
 			return;
 		}
 
