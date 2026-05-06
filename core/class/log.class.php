@@ -165,24 +165,28 @@ class log extends AbstractLogger {
 			$maxLineLog = self::DEFAULT_MAX_LINE;
 		}
 
-		$sudo = system::getCmdSudo();
-		$tmpFile = tempnam(jeedom::getTmpFolder(), 'log_chunk_');
-		if ($tmpFile === false) {
-			log::add('jeedom', "error", 'Failed to create temporary file in chunkLog() for:' . basename($rawPath));
-			return;
-		}
-		$tmpFile = escapeshellarg($tmpFile);
 		$maxSizeLog = (int)self::getConfig('maxSizeLog', 10);
 		$maxSizeLog = max(1, $maxSizeLog);
+		$maxBytes = $maxSizeLog * 1024 * 1024;
+
+		if (filesize($rawPath) < $maxBytes) {
+			$output = trim(com_shell::execute("wc -l < " . escapeshellarg($rawPath)));
+			if (ctype_digit($output) && (int)$output <= $maxLineLog) {
+				return;
+			}
+		}
+
+		$sudo = system::getCmdSudo();
 		$shellPath = escapeshellarg($rawPath);
+		$tmpFile = escapeshellarg(jeedom::getTmpFolder() . '/' . uniqid('log_chunk_'));
 
 		try {
 			com_shell::execute("{$sudo} tail -c {$maxSizeLog}M {$shellPath} | tail -n {$maxLineLog} > {$tmpFile} && {$sudo} cat {$tmpFile} > {$shellPath}");
-		} catch (\Exception $e) {
+		} catch (\Throwable $e) {
 			log::add('jeedom', "error", "Caught exception in chunkLog(): " . $e->getMessage());
 
 			clearstatcache(true, $rawPath);
-			if (file_exists($rawPath) && filesize($rawPath) > (1024 * 1024 * $maxSizeLog)) {
+			if (file_exists($rawPath) && filesize($rawPath) > $maxBytes) {
 				// use truncate to empty file without destroying Inode
 				com_shell::execute("{$sudo} truncate -s 0 {$shellPath}");
 			}
