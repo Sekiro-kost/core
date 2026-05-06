@@ -44,6 +44,7 @@ no entries
 ## Developer
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-05-06 15:22:08 | Optimize Jeedom core version retrieval by caching the result | [#3315](https://github.com/jeedom/core/pull/3315) |
 | 2026-05-06 10:00:20 | Refactor var to const/let in equipment and commands (2/4) | [#3301](https://github.com/jeedom/core/pull/3301) |
 | 2026-05-06 09:19:39 | Refactor var to const/let in admin/system + log search multi-term (4/4) | [#3303](https://github.com/jeedom/core/pull/3303) |
 | 2026-05-05 17:04:02 | Refactor var to const/let in core JS utilities (1/4) | [#3300](https://github.com/jeedom/core/pull/3300) |
