@@ -75,7 +75,7 @@ if (!jeeFrontEnd.eqAnalyse) {
 
               removed = jeeFrontEnd.eqAnalyse.getRemoveCmd(data[i].cmd[j].who.replaceAll('#', ''))
               if (removed) {
-                tr += ' <span class="lebel label-sm label-info">' + removed.name + '</span>'
+                tr += ' <span class="label label-sm label-info">' + removed.name + '</span>'
                 tr += ' {{Supprimée le}} ' + removed.date
               }
 
