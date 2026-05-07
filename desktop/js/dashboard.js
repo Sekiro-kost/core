@@ -349,7 +349,8 @@ if (!jeeFrontEnd.dashboard) {
             document.querySelectorAll('#categoryfilter .catFilterKey').forEach(function(element) {
               element.checked = false
             })
-            document.querySelector('#categoryfilter .catFilterKey[data-key="' + cat + '"]').checked = true
+            const catEl = document.querySelector('#categoryfilter .catFilterKey[data-key="' + cat + '"]')
+            if (catEl) catEl.checked = true
             self.filterByCategory()
           }
 
