@@ -193,7 +193,7 @@ if (!jeeFrontEnd.plan) {
             const img = document.querySelector('.div_displayObject img')
             if (img != null) {
               const style = {
-                height: img.getAttribute('data-sixe_x') + 'px',
+                height: img.getAttribute('data-sixe_y') + 'px',
                 width: img.getAttribute('data-sixe_x') + 'px'
               }
               Object.assign(jeeFrontEnd.plan.planContainer.style, style)

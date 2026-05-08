@@ -265,7 +265,7 @@ if (!jeeFrontEnd.dashboard) {
           for (let i = 0; i < nbEqs; i++) {
             if (self.summaryObjEqs[self._object_id].includes(data[i].id)) {
               nbEqs--
-              return
+              continue
             }
             self.summaryObjEqs[self._object_id].push(data[i].id)
 
@@ -345,12 +345,13 @@ if (!jeeFrontEnd.dashboard) {
           //synch category filter:
           if (self.url_category != 'all') {
             const cat = self.url_category.charAt(0).toUpperCase() + self.url_category.slice(1)
-            document.getElementById('dashTopBar button.dropdown-toggle').addClass('warning')
+            document.querySelector('#dashTopBar button.dropdown-toggle').addClass('warning')
             document.querySelectorAll('#categoryfilter .catFilterKey').forEach(function(element) {
               element.checked = false
             })
-            document.querySelector('#categoryfilter .catFilterKey[data-key="' + cat + '"]').checked = true
-            this.filterByCategory()
+            const catEl = document.querySelector('#categoryfilter .catFilterKey[data-key="' + cat + '"]')
+            if (catEl) catEl.checked = true
+            self.filterByCategory()
           }
 
           domUtils.hideLoading()
@@ -458,7 +459,7 @@ document.getElementById('in_searchDashboard')?.addEventListener('keyup', functio
 })
 document.getElementById('bt_resetDashboardSearch')?.addEventListener('click', function(event) {
   if (jeedomUI.isEditing) return
-  document.querySelectorAll('#categoryfilter li .catFilterKey').forEach(cat => { cat.checkd = true})
+  document.querySelectorAll('#categoryfilter li .catFilterKey').forEach(cat => { cat.checked = true})
   document.querySelectorAll('#dashTopBar button.dropdown-toggle').removeClass('warning')
   document.getElementById('in_searchDashboard').jeeValue('').triggerEvent('keyup')
 })
