@@ -35,6 +35,7 @@ no entries
 ## Others
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-05-09 16:39:05 | Update translations | [#3334](https://github.com/jeedom/core/pull/3334) |
 | 2026-05-08 15:06:43 | refactor(desktop/js): replace var with const/let in display modules (dashboard, widgets, plan, plan3d, eqAnalyse) | [#3320](https://github.com/jeedom/core/pull/3320) |
 | 2026-05-06 15:22:08 | Optimize Jeedom core version retrieval by caching the result | [#3315](https://github.com/jeedom/core/pull/3315) |
 | 2026-05-06 10:00:20 | Refactor var to const/let in equipment and commands (2/4) | [#3301](https://github.com/jeedom/core/pull/3301) |
