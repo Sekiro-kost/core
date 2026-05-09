@@ -1618,14 +1618,6 @@
         "Couleur d'arrière plan": "Colore dello sfondo",
         "Pas du changement de valeur": "Nessuna variazione di valore"
     },
-    "core\/template\/dashboard\/cmd.action.slider.timeShutter.html": {
-        "Affiche durée ou date de la valeur": "Visualizza la durata o la data del valore",
-        "Couleur de l'indicateur de valeur": "Colore dell'indicatore di valore",
-        "Date de collecte": "Data di raccolta",
-        "Date de valeur": "Data di valuta",
-        "Inverse la position de l'indicateur de valeur": "Inverte la posizione dell'indicatore di valore",
-        "Pas du changement de valeur": "Nessuna variazione di valore"
-    },
     "core\/template\/dashboard\/cmd.action.slider.tmplicon.html": {
         "Affiche durée ou date de la valeur": "Visualizza la durata o la data del valore",
         "Couleur du curseur et valeur": "Colore del cursore e valore",

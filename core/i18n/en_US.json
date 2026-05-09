@@ -1618,14 +1618,6 @@
         "Couleur d'arrière plan": "Background color",
         "Pas du changement de valeur": "No change in value"
     },
-    "core\/template\/dashboard\/cmd.action.slider.timeShutter.html": {
-        "Affiche durée ou date de la valeur": "Displays duration or date of the value",
-        "Couleur de l'indicateur de valeur": "Value indicator color",
-        "Date de collecte": "Date of collection",
-        "Date de valeur": "Value date",
-        "Inverse la position de l'indicateur de valeur": "Reverses the position of the value indicator",
-        "Pas du changement de valeur": "No change in value"
-    },
     "core\/template\/dashboard\/cmd.action.slider.tmplicon.html": {
         "Affiche durée ou date de la valeur": "Displays duration or date of the value",
         "Couleur du curseur et valeur": "Cursor color and value",
