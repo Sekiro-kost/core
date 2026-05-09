@@ -3,6 +3,7 @@
 ## New core features
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-05-09 16:16:05 | Remove legacy time widgets | [#3332](https://github.com/jeedom/core/pull/3332) |
 | 2026-04-19 15:18:24 | Add healthcheck in the docker container | [#2998](https://github.com/jeedom/core/pull/2998) |
 
 ## Breaking changes
