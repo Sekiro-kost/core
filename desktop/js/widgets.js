@@ -368,6 +368,7 @@ try {
       const widgetsList = []
       widgetsList['info'] = []
       widgetsList['action'] = []
+      let groupWidgets, items, wg, wgName, wgId
       for (let i = 0; i < _widgets.length; i++) {
         wg = _widgets[i]
         if (wg.type == 'info') widgetsList['info'].push([wg.name, wg.id])
@@ -377,7 +378,6 @@ try {
       //set context menu!
       const contextmenuitems = {}
       let uniqId = 0
-      let groupWidgets, items, wg, wgName, wgId
       for (const group in widgetsList) {
         groupWidgets = widgetsList[group]
         items = {}
