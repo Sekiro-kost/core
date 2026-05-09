@@ -939,9 +939,9 @@ class jeedom {
 		}
 	}
 
-	public static function version() {
+	public static function version(bool $_force = false) {
 		static $version = null;
-		if ($version !== null) {
+		if ($version !== null && !$_force) {
 			return $version;
 		}
 		$path = __DIR__ . '/../config/version';
