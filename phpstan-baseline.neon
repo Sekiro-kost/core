@@ -169,12 +169,6 @@ parameters:
 			path: core/class/widgets.class.php
 
 		-
-			message: '#^Array has 2 duplicate keys with value ''THERMOSTAT_HUMIDITY'' \(''THERMOSTAT_HUMIDITY'', ''THERMOSTAT_HUMIDITY''\)\.$#'
-			identifier: array.duplicateKey
-			count: 1
-			path: core/config/jeedom.config.php
-
-		-
 			message: '#^Instantiated class elFinder not found\.$#'
 			identifier: class.notFound
 			count: 1
