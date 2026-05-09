@@ -11,6 +11,7 @@ no entries
 ## Fixes
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-05-09 08:50:04 | Fix/chunk log | [#3316](https://github.com/jeedom/core/pull/3316) |
 | 2026-05-08 11:44:36 | fix(desktop/js): correct 11 DOM and logic bugs (dashboard, object, plan, replace, eqAnalyse, administration, update) | [#3318](https://github.com/jeedom/core/pull/3318) |
 | 2026-05-04 10:02:20 | Fix timeline folder field visibility on scenario page load | [#3305](https://github.com/jeedom/core/pull/3305) |
 | 2026-04-25 08:00:07 | Fix: translations string concatenation | [#3289](https://github.com/jeedom/core/pull/3289) |
