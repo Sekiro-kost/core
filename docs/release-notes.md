@@ -58,6 +58,7 @@ no entries
 ## Developer
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-05-09 17:30:24 | chore: translate PHPStan workflow PR body to English | [#3336](https://github.com/jeedom/core/pull/3336) |
 | 2026-05-09 07:43:23 | chore: ignore .claude settings directory | [#3329](https://github.com/jeedom/core/pull/3329) |
 | 2026-05-05 10:21:10 | Bump peter-evans/create-pull-request from 5 to 8 | [#3307](https://github.com/jeedom/core/pull/3307) |
 | 2026-05-05 10:20:50 | Bump actions/github-script from 7 to 9 | [#3308](https://github.com/jeedom/core/pull/3308) |
