@@ -37,7 +37,6 @@ no entries
 | Merge date | Title | PR |
 | --- | --- | --- |
 | 2026-05-09 19:12:01 | Chore: secure parameter typehints | [#3317](https://github.com/jeedom/core/pull/3317) |
-| 2026-05-09 16:39:05 | Update translations | [#3334](https://github.com/jeedom/core/pull/3334) |
 | 2026-05-08 15:06:43 | refactor(desktop/js): replace var with const/let in display modules (dashboard, widgets, plan, plan3d, eqAnalyse) | [#3320](https://github.com/jeedom/core/pull/3320) |
 | 2026-05-06 15:22:08 | Optimize Jeedom core version retrieval by caching the result | [#3315](https://github.com/jeedom/core/pull/3315) |
 | 2026-05-06 10:00:20 | Refactor var to const/let in equipment and commands (2/4) | [#3301](https://github.com/jeedom/core/pull/3301) |
@@ -45,9 +44,6 @@ no entries
 | 2026-05-05 17:04:02 | Refactor var to const/let in core JS utilities (1/4) | [#3300](https://github.com/jeedom/core/pull/3300) |
 | 2026-05-05 17:02:29 | Refactor var to const/let in UI rendering files (3/4) | [#3302](https://github.com/jeedom/core/pull/3302) |
 | 2026-05-05 14:28:06 | add log in plugin autoloader | [#3276](https://github.com/jeedom/core/pull/3276) |
-| 2026-04-25 08:04:11 | Update translations | [#3295](https://github.com/jeedom/core/pull/3295) |
-| 2026-04-25 07:30:36 | Update translations | [#3293](https://github.com/jeedom/core/pull/3293) |
-| 2026-04-20 11:50:35 | Update translations | [#3285](https://github.com/jeedom/core/pull/3285) |
 | 2026-04-13 08:16:53 | feat: improve "do not remove log" feature | [#3245](https://github.com/jeedom/core/pull/3245) |
 | 2026-04-08 09:16:23 | chore: Correction *aucun* script | [#3246](https://github.com/jeedom/core/pull/3246) |
 | 2026-04-04 07:56:05 | chore: typo Securité | [#3241](https://github.com/jeedom/core/pull/3241) |
@@ -80,3 +76,7 @@ no entries
 | 2026-04-16 22:32:24 | Use Composer dependency for PHPStan | [#3256](https://github.com/jeedom/core/pull/3256) |
 | 2026-04-03 15:27:29 | Update GitHub workflows to use 'develop' branch instead of 'alpha' and 'beta' | [#3240](https://github.com/jeedom/core/pull/3240) |
 
+## Uncategorized
+| Merge date | Title | PR |
+| --- | --- | --- |
+| 2026-05-11 09:08:24 | Update translations for 'while' block terminology | [#3339](https://github.com/jeedom/core/pull/3339) |
