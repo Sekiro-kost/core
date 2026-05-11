@@ -468,21 +468,22 @@ class scenarioExpression {
 		return round($historyStatistique['max'], $_round);
 	}
 
-	public static function wait($_condition, $_timeout = 7200) {
+	public static function wait($_condition, $_timeout = 7200, $_scenario = null) {
 		$result = false;
 		$occurence = 0;
 		$limit = 7200;
-		$timeout = jeedom::evaluateExpression($_timeout);
-		$limit = (is_numeric($timeout)) ? $timeout : 7200;
-		while ($result !== true) {
-			$result = jeedom::evaluateExpression($_condition);
-			if ($occurence > $limit) {
-				return 0;
+		$timeout = jeedom::evaluateExpression($_timeout, $_scenario);
+		$limit = is_numeric($timeout) ? min(7200, $timeout) : 7200;
+
+		while ($occurence < $limit) {
+			$result = jeedom::evaluateExpression($_condition, $_scenario);
+			if ($result === true) {
+				return 1;
 			}
 			$occurence++;
 			sleep(1);
 		}
-		return 1;
+		return 0;
 	}
 
 	public static function minBetween($_cmd_id, $_startDate, $_endDate, $_round = 1) {
@@ -1435,24 +1436,17 @@ class scenarioExpression {
 					if (!isset($options['condition'])) {
 						return;
 					}
-					$result = false;
-					$occurence = 0;
-					$limit = 7200;
-					if (isset($options['timeout'])) {
-						$timeout = jeedom::evaluateExpression($options['timeout']);
-						$limit = (is_numeric($timeout)) ? $timeout : 7200;
+					$limit = $options['timeout'] ?? 7200;
+
+					$result = self::wait($options['condition'], $limit, $scenario);
+					$expression = self::setTags($options['condition'], $scenario, true);
+					if ($result === 0) {
+						$limitWithTags = self::setTags($limit, $scenario, true);
+						$resultLimit = evaluate($limitWithTags);
+						$this->setLog($scenario, sprintf(__('[Wait] Dépassement de limite: %s => %s - condition: %s', __FILE__), $limitWithTags, $resultLimit, $expression));
+					} else {
+						$this->setLog($scenario, sprintf(__('[Wait] Condition valide: %s', __FILE__), $expression));
 					}
-					while (!$result) {
-						$expression = self::setTags($options['condition'], $scenario, true);
-						$result = evaluate($expression);
-						if ($occurence > $limit) {
-							$this->setLog($scenario, __('[Wait] Condition valide par dépassement de temps :', __FILE__) . ' ' . $expression . ' => ' . $result);
-							return;
-						}
-						$occurence++;
-						sleep(1);
-					}
-					$this->setLog($scenario, __('[Wait] Condition valide :', __FILE__) . ' ' . $expression . ' => ' . $result);
 					return;
 				} elseif ($this->getExpression() == 'sleep') {
 					if (isset($options['duration'])) {
