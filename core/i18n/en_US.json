@@ -768,7 +768,7 @@
         "SINON": "ELSE",
         "Scenario": "Scenario",
         "Sous-élément inconnu. Vérifiez l\\'ID :": "Unknown sub-element. Check the ID:",
-        "TANT QUE": "AS LONG AS",
+        "TANT QUE": "WHILE",
         "[While] Arrêt de la boucle pour cause de durée d\\'exécution trop longue": "[While] Loop terminated due to excessive execution time",
         "trouvée dans le scénario :": "found in the scenario:"
     },
@@ -5117,7 +5117,7 @@
         "Supprimer": "Delete",
         "Supprimer les logs": "Delete logs",
         "Synchrone": "Synchronous",
-        "Tant que": "As long as",
+        "Tant que": "While",
         "Template": "Template",
         "Temps réel": "Real time",
         "Timeline": "Timeline",
