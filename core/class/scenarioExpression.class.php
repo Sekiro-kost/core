@@ -473,7 +473,7 @@ class scenarioExpression {
 		$occurence = 0;
 		$limit = 7200;
 		$timeout = jeedom::evaluateExpression($_timeout, $_scenario);
-		$limit = is_numeric($timeout) ? min(7200, $timeout) : 7200;
+		$limit = is_numeric($timeout) ? min($timeout, 7200) : 7200;
 
 		while ($occurence < $limit) {
 			$result = jeedom::evaluateExpression($_condition, $_scenario);
@@ -1451,18 +1451,18 @@ class scenarioExpression {
 				} elseif ($this->getExpression() == 'sleep') {
 					if (isset($options['duration'])) {
 						try {
-							$options['duration'] = floatval(evaluate($options['duration']));
-						} catch (Exception $e) {
-						} catch (Error $e) {
-						}
-						if ((is_float($options['duration']) || is_int($options['duration'])) && $options['duration'] > 0) {
-							$this->setLog($scenario, __('Pause de', __FILE__) . ' ' . $options['duration'] . ' ' . __('seconde(s)', __FILE__));
-							if ($options['duration'] < 1) {
-								usleep($options['duration'] * 1000000);
+							$duration = floatval(jeedom::evaluateExpression($options['duration'], $scenario));
+							if ($duration > 0) {
+								$seconds = min((float)$duration, 3600);
+								$this->setLog($scenario, sprintf(__('Pause de %s seconde(s)', __FILE__), $seconds));
+								if ($seconds < 1) {
+									usleep((int) round($seconds * 1000000));
+									return;
+								}
+								sleep((int) floor($seconds));
 								return;
 							}
-							sleep($options['duration']);
-							return;
+						} catch (\Throwable $e) {
 						}
 					}
 					$this->setLog($scenario, $GLOBALS['JEEDOM_SCLOG_TEXT']['invalidDuration']['txt'] . $options['duration']);
