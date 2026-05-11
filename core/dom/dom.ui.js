@@ -58,7 +58,7 @@ Element.prototype.isHidden = function() {
   return (this.offsetParent === null)
 }
 Element.prototype.seen = function() {
-  this.classList.remove('hidden')
+  this.removeClass('hidden')
   this.style.display = ''
   return this
 }
@@ -69,7 +69,7 @@ NodeList.prototype.seen = function() {
   return this
 }
 Element.prototype.unseen = function() {
-  this.style.display = 'none'
+  this.addClass('hidden')
   return this
 }
 NodeList.prototype.unseen = function() {
@@ -79,11 +79,10 @@ NodeList.prototype.unseen = function() {
   return this
 }
 Element.prototype.toggle = function() {
-  if (this.offsetParent === null) {
-    this.classList.remove('hidden')
-    this.style.display = ''
+  if (this.isHidden()) {
+    this.seen()
   } else {
-    this.style.display = 'none'
+    this.unseen()
   }
   return this
 }
