@@ -202,9 +202,15 @@ class scenarioElement {
 			if (!is_numeric($limits)) {
 				throw new Exception(__('La condition pour une boucle doit être numérique :', __FILE__) . ' ' . $limits);
 			}
+			$endTime = time() + 3600;
 			$return = false;
 			for ($i = 1; $i <= $limits; $i++) {
 				$return = $this->getSubElement('do')->execute($_scenario);
+				if (time() > $endTime) {
+					$_scenario->setLog(__('[For] Arrêt de la boucle pour cause de durée d\'exécution trop longue', __FILE__));
+					return false;
+				}
+				sleep(1);
 			}
 			return $return;
 		} elseif ($this->getType() == 'while') {
@@ -232,7 +238,7 @@ class scenarioElement {
 				$return = $this->getSubElement('do')->execute($_scenario);
 				if (time() > $endTime) {
 					$_scenario->setLog(__('[While] Arrêt de la boucle pour cause de durée d\'exécution trop longue', __FILE__));
-					return;
+					return false;
 				}
 				sleep(1);
 				$result = $this->getSubElement('while')->execute($_scenario);
