@@ -37,6 +37,7 @@ no entries
 ## Others
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-05-12 10:37:46 | refactor(dom.ui): seen(), unseen() and toggle() use hidden class consistently | [#3342](https://github.com/jeedom/core/pull/3342) |
 | 2026-05-11 09:08:24 | Update translations for 'while' block terminology | [#3339](https://github.com/jeedom/core/pull/3339) |
 | 2026-05-09 19:12:01 | Chore: secure parameter typehints | [#3317](https://github.com/jeedom/core/pull/3317) |
 | 2026-05-08 15:06:43 | refactor(desktop/js): replace var with const/let in display modules (dashboard, widgets, plan, plan3d, eqAnalyse) | [#3320](https://github.com/jeedom/core/pull/3320) |
