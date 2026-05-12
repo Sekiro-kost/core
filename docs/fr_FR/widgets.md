@@ -113,47 +113,6 @@ Les équipements (ou tuiles) possèdent certains paramètres de configuration ac
 
 - **dashboard_class/mobile_class** : permet d'ajouter une class à l'équipement. Par exemple `col2` pour les équipements en version mobile va permettre de doubler la largeur du widget.
 
-### Toggle d'icône ON/OFF
-
-Concernant les widgets pour interrupteurs *(on/off, allumer/éteindre, ouvrir/fermer, etc...)*, il peut-être considéré comme plus agréable visuellement de n'afficher qu'une icône reflétant l'état de l'appareil à contrôler.
-
-Cette possibilité est utilisable aussi bien avec les widgets par défaut qu'avec les widgets personnalisés.
-
-Pour se faire, il est nécessaire de prendre en compte 2 pré-requis :
-
-- Les **2 commandes action/défaut** doivent être liées à une commande **info/binaire** qui se chargera de mémoriser l'état actuel de l'appareil.
-
->**Exemple**
->![Widget ToggleLink](./images/widgets5.png)
-
->**Conseil**
->Décocher la case *"Afficher"* de la commande info/binaire qui n'aura pas besoin d'être affichée.
-
-- Afin que le Core Jeedom soit en mesure d'identifier quelle commande correspond à quelle action, il est indispensable de respecter le nommage suivant pour les **2 commandes action/défaut** :
-```
-    'on':'on',
-    'off':'off',
-    'monter':'on',
-    'descendre':'off',
-    'ouvrir':'on',
-    'ouvrirStop':'on',
-    'ouvert':'on',
-    'fermer':'off',
-    'activer':'on',
-    'desactiver':'off',
-    'désactiver':'off',
-    'lock':'on',
-    'unlock':'off',
-    'marche':'on',
-    'arret':'off',
-    'arrêt':'off',
-    'stop':'off',
-    'go':'on'
-```
-
->**Astuce**
->Tant que le nom normalisé reste lisible il est possible d'adapter le nommage, par exemple *ouvrir_volet* ou *volet_fermer*, *marche_2* et *arret_2*, etc.
-
 ## Widgets personnalisés
 
 La page Widgets, accessible par le menu **Outils → Widgets**, vous permet d'ajouter des widgets personnalisés en complément de ceux disponibles par défaut dans Jeedom.
@@ -334,3 +293,44 @@ jeedom.cmd.refreshValue([{ cmd_id: '#id#', value: '#value#', display_value: '#st
 ### Exemples
 
  Vous trouverez [ici](https://github.com/Jeedom/core/tree/master/core/template) des exemples de widgets (dans les dossiers dashboard et mobile)
+
+## Toggle d'icône ON/OFF
+
+Concernant les widgets pour interrupteurs *(on/off, allumer/éteindre, ouvrir/fermer, etc...)*, il peut-être considéré comme plus agréable visuellement de n'afficher qu'une icône reflétant l'état de l'appareil à contrôler.
+
+Cette possibilité est utilisable aussi bien avec les widgets par défaut qu'avec les widgets personnalisés.
+
+Pour se faire, il est nécessaire de prendre en compte 2 pré-requis :
+
+- Les **2 commandes action/défaut** doivent être liées à une commande **info/binaire** qui se chargera de mémoriser l'état actuel de l'appareil.
+
+>**Exemple**
+>![Widget ToggleLink](./images/widgets5.png)
+
+>**Conseil**
+>Décocher la case *"Afficher"* de la commande info/binaire qui n'aura pas besoin d'être affichée.
+
+- Afin que le Core Jeedom soit en mesure d'identifier quelle commande correspond à quelle action, il est indispensable de respecter le nommage suivant pour les **2 commandes action/défaut** :
+```
+    'on':'on',
+    'off':'off',
+    'monter':'on',
+    'descendre':'off',
+    'ouvrir':'on',
+    'ouvrirStop':'on',
+    'ouvert':'on',
+    'fermer':'off',
+    'activer':'on',
+    'desactiver':'off',
+    'désactiver':'off',
+    'lock':'on',
+    'unlock':'off',
+    'marche':'on',
+    'arret':'off',
+    'arrêt':'off',
+    'stop':'off',
+    'go':'on'
+```
+
+>**Astuce**
+>Tant que le nom normalisé reste lisible il est possible d'adapter le nommage, par exemple *ouvrir_volet* ou *volet_fermer*, *marche_2* et *arret_2*, etc.
