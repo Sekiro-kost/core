@@ -769,6 +769,7 @@
         "Scenario": "Cenário",
         "Sous-élément inconnu. Vérifiez l\\'ID :": "Sub-item desconhecido. Verifique o ID:",
         "TANT QUE": "ENQUANTO",
+        "[For] Arrêt de la boucle pour cause de durée d\\'exécution trop longue": "[For] Interrupção do ciclo devido a tempo de execução excessivamente longo",
         "[While] Arrêt de la boucle pour cause de durée d\\'exécution trop longue": "[Enquanto] Interrupção do ciclo devido a tempo de execução excessivamente longo",
         "trouvée dans le scénario :": "encontrado no cenário:"
     },
@@ -814,7 +815,7 @@
         "Masquage de": "Mascara de",
         "Mise à jour du tag": "Atualização de tags",
         "Panel introuvable - Vérifiez l\\'id :": "Painel não encontrado - Verifique o ID:",
-        "Pause de": "Pausa",
+        "Pause de %s seconde(s)": "Pausa de %s segundo(s)",
         "Rapport": "Relatório",
         "Rapport url du": "Relatório de Url",
         "Rapport équipement du": "Relatório de equipamento",
@@ -832,13 +833,13 @@
         "Veuillez trouver ci-joint le rapport équipement généré le": "Encontre em anexo o relatório do equipamento gerado em",
         "Vrai": "Verdadeiro",
         "Vue introuvable - Vérifiez l\\'id :": "Vista não encontrada - Verifique o ID:",
-        "[Wait] Condition valide :": "[Wait]Condição válida:",
-        "[Wait] Condition valide par dépassement de temps :": "[Wait] Condição válida para o tempo limite:",
+        "[Wait] Condition valide: %s": "[Wait] Condição válida: %s",
+        "[Wait] Début du wait, timeout: %ss": "[Wait] Início da espera, tempo limite: %ss",
+        "[Wait] Dépassement du timeout: %s": "[Wait] Excedido o tempo limite: %s",
         "au": "o",
         "du": "do",
         "généré le": "gerado em",
         "options :": "opções:",
-        "seconde(s)": "segundo(s)",
         "à": "às"
     },
     "core\/class\/system.class.php": {
