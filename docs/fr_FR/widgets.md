@@ -1,62 +1,117 @@
 # Widgets
 
-Un widget est la représentation graphique d'une commande. Chaque widget est spécifique au type et au sous-type de la commande sur laquelle il doit être appliqué ainsi qu'à la version à partir de laquelle on accède à Jeedom *(desktop ou mobile)*.
+Un widget est la représentation graphique d'une commande sur le dashboard ou en version mobile. Le Core Jeedom attribue automatiquement un widget selon le type *(Info ou Action)* et le sous-type *(Binaire, Numérique, Autre, Curseur, etc.)* de la commande. Il est possible d'en sélectionner un autre parmi ceux disponibles via la configuration avancée de la commande, onglet "Affichage" → "**Widget**".
 
 ## Widgets par défaut
 
-Avant de nous intéresser à la personnalisation des widgets, découvrons les possibilités offertes par certains widgets présents par défaut dans le Core Jeedom.
+Voici les widgets intégrés au Core Jeedom, leurs usages et leurs paramètres de personnalisation.
+
+### Commandes
+
+La plupart des widgets exposent des **paramètres optionnels** permettant d'ajuster leur rendu sans créer de widget personnalisé : couleur, échelle, comportement, etc. Ils se configurent dans la configuration avancée de la commande, onglet "Affichage" → section "**Paramètres optionnels widget**", sous forme de paires nom/valeur. Les paramètres disponibles varient selon le widget sélectionné et sont listés ci-dessous.
+
+Le paramètre **`time`** (`duration` | `date`) est commun à tous les widgets *(sauf HygroThermographe)* et affiche respectivement la durée écoulée ou la date du dernier changement de valeur.
+
+#### Info / Binaire
+
+| Widget | Description | Paramètres optionnels |
+|--------|-------------|----------------------|
+| Shutter | Représentation visuelle d'un volet avec position en % | `color` |
+| Alert | Coche verte (ON) / alerte rouge (OFF) | |
+| Door | Porte fermée verte (ON) / porte ouverte rouge (OFF) | |
+| Flood | Goutte d'eau barrée verte (ON) / goutte d'eau bleue (OFF) | |
+| Heat | Flamme rouge (ON) / croix (OFF) | |
+| Icon | Coche verte (ON) / croix rouge (OFF) | |
+| Light | Ampoule allumée jaune (ON) / ampoule éteinte (OFF) | |
+| Line | Coche verte (ON) / croix rouge (OFF), affichage inline avec le nom | |
+| Lock | Cadenas fermé (ON) / cadenas ouvert rouge (OFF) | |
+| Presence | Coche verte (ON) / icône mouvement rouge (OFF) | |
+| Prise | Icône prise (ON) / croix (OFF) | |
+| Window | Fenêtre fermée verte (ON) / fenêtre ouverte rouge (OFF) | |
+
+#### Info / Numérique
+
+| Widget | Description | Paramètres optionnels |
+|--------|-------------|----------------------|
+| Badge | Valeur affichée dans un badge coloré | `color`, `fontcolor` |
+| Compass | Boussole indiquant une direction en degrés | `needle_color`, `ns_color`, `oe_color`, `scale` |
+| Gauge | Jauge en arc de cercle | `color` |
+| Horizontal | Barre de progression horizontale | `color` |
+| HygroThermographe | Affichage combiné température et humidité *(widget multi-commandes, sans `time`)* | `scale` |
+| Light | Icône d'ampoule (allumée/éteinte selon la valeur) avec valeur et unité | |
+| Line | Nom, valeur et unité affichés sur une seule ligne (format compact) | |
+| Rain | Niveau d'eau ou de précipitations | `color`, `scale`, `showRange`, `animate` |
+| Shutter | Volet avec curseur de position en % | `color`, `invert` |
+| Tile | Nom affiché en titre au-dessus de la valeur et de l'unité | |
+| Vertical | Barre de progression verticale | `color` |
+| HeatPiloteWire | Fil pilote 4 états : confort, hors-gel, éco, arrêt | |
+| HeatPiloteWireQubino | Fil pilote Qubino : 6 paliers de confort/éco/hors-gel/arrêt | |
+
+#### Info / Autre
+
+| Widget | Description | Paramètres optionnels |
+|--------|-------------|----------------------|
+| Badge | Valeur texte dans un badge coloré | `color`, `fontcolor` |
+| ButtonImage | Bouton ouvrant en modal l'image dont l'URL est la valeur de la commande | |
+| Color | Affiche la couleur correspondant à un code hexadécimal | `showValue` |
+| Line | Nom et valeur texte affichés sur une seule ligne (format compact) | |
+| Multiline | Valeur texte sur plusieurs lignes avec défilement | `maxHeight`, `minHeight`, `backgroundColor` |
+| Tile | Nom affiché en titre au-dessus de la valeur texte | |
+
+#### Action / Couleur
+
+| Widget | Description | Paramètres optionnels |
+|--------|-------------|----------------------|
+| Default | Sélecteur de couleur complet (roue chromatique + valeur hex) | |
+| Picker | Sélecteur de couleur simplifié | |
+
+#### Action / Défaut
+
+| Widget | Description | Paramètres optionnels |
+|--------|-------------|----------------------|
+| Alert | Icône clochette reflétant l'état de la commande liée (rouge = actif, verte barrée = inactif) | |
+| BinaryDefault | Icône reflétant l'état de la commande liée (coche verte = actif, croix rouge = inactif) | |
+| BinarySwitch | Interrupteur à bascule ON/OFF | `color`, `color_switch` |
+| BtnAlert | Bouton avec icône clochette reflétant l'état de la commande liée | |
+| Button | Bouton simple d'exécution | |
+| Circle | Cercle plein (ON) / cercle vide (OFF) | |
+| Fan | Ventilateur (ON) / croix (OFF) | |
+| Garage | Garage fermé vert (ON) / garage ouvert rouge (OFF) | |
+| Light | Ampoule allumée jaune (ON) / ampoule éteinte (OFF) | |
+| Lock | Cadenas fermé (ON) / cadenas ouvert orange (OFF) | |
+| Prise | Icône prise (ON) / croix (OFF) | |
+| Sprinkle | Arrosage bleu (ON) / croix (OFF) | |
+| Toggle | Interrupteur activé jaune (ON) / désactivé (OFF) | |
+| ToggleLine | Interrupteur activé jaune (ON) / désactivé (OFF), affichage inline | |
+
+#### Action / Curseur
+
+| Widget | Description | Paramètres optionnels |
+|--------|-------------|----------------------|
+| Button | Curseur avec boutons + et − pour ajustement précis | `step`, `width` |
+| Shutter | Curseur spécialisé pour la position d'un volet | `color`, `step`, `invert` |
+| Slider | Curseur horizontal | `color`, `step` |
+| SliderVertical | Curseur vertical | `color`, `step` |
+| Value | Champ de saisie numérique direct | `color`, `step`, `noslider`, `width` |
+| Light | Ampoule allumée jaune (ON) / ampoule éteinte (OFF) | |
+
+#### Action / Liste
+
+| Widget | Description | Paramètres optionnels |
+|--------|-------------|----------------------|
+| Select | Liste déroulante de valeurs prédéfinies | |
+
+#### Action / Message
+
+| Widget | Description | Paramètres optionnels |
+|--------|-------------|----------------------|
+| Input | Formulaire d'envoi d'un message avec titre et corps | `title`, `title_placeholder`, `title_possibility_list`, `title_disable`, `message_placeholder`, `message`, `message_disable` |
 
 ### Équipements
 
-Les équipements (ou tuiles) possèdent certains paramètres de configuration accessibles via la configuration avancée de l'équipement, onglet "Affichage" → "**Paramètres optionnels sur la tuile**".
-
-##### Paramètre(s) optionnel(s)
+Les équipements (ou tuiles) possèdent certains paramètres de configuration accessibles via la configuration avancée de l'équipement, onglet "Affichage" → "**Paramètres optionnels sur la tuile**":
 
 - **dashboard_class/mobile_class** : permet d'ajouter une class à l'équipement. Par exemple `col2` pour les équipements en version mobile va permettre de doubler la largeur du widget.
-
-### HygroThermographe
-
-Ce widget est un peu particulier car c'est un widget multi-commandes, c'est à dire qu'il assemble la valeur de plusieurs commandes. Ici il prend les commandes de type température et humidité. Pour le configurer il faut affecter le widget aux commandes température et humidité de votre équipement.
-
-![Widget HygroThermographe](./images/widgets3.png)
-
-##### Paramètre(s) optionnel(s)
-
-- **scale** *(échelle)* : Permet de changer la taille du widget, en renseignant le paramètre **scale** à `0.5`, le widget sera 2 fois plus petit.
-
->**IMPORTANT**      
->Il faut ABSOLUMENT que les types génériques soient renseignés; `Température` sur la commande de température et `Humidité` sur la commande humidité (cela se configure dans la configuration avancée de la commande, onglet configuration).
-
->**NOTE**      
-> Attention sur un design il ne faut surtout pas mettre une commande seule avec ce widget cela ne marchera pas vu que c'est un widget utilisant la valeur de plusieurs commandes, il faut absolument mettre le widget complet
-
-### Multiline
-
-Ce widget permet d'afficher le contenu d'une commande info/autre sur plusieurs lignes.
-
-##### Paramètre(s) optionnel(s)
-
-- **maxHeight** *(hauteur maxi)* : Permet de définir la hauteur maximale du widget (un ascenseur *(scrollbar)* apparaitra sur le coté si le texte dépasse).
-
-### Slider Button
-
-Widget pour commande action/curseur dôté d'un bouton "**+**" et d'un bouton "**-**" permettant d'agir avec précision sur une valeur.
-
-##### Paramètre(s) optionnel(s)
-
-- **step** *(pas)* : Permet de régler le pas de changement de valeur *(0.5 par défaut)*.
-
-### Rain
-
-Widget permettant l'affichage de niveaux d'eau.
-
-![Widget Rain](./images/widgets4.png)
-
-##### Paramètre(s) optionnel(s)
-
-- **scale** *(échelle)* : Permet de changer la taille du widget, en renseignant le paramètre **scale** à `0.5`, le widget sera 2 fois plus petit.
-- **showRange** : Mettre à `1` pour afficher les valeurs mini et maxi de la commande.
-- **animate** : Désactive l'animation du widget en ayant `0` pour valeur.
 
 ### Toggle d'icône ON/OFF
 
@@ -68,10 +123,10 @@ Pour se faire, il est nécessaire de prendre en compte 2 pré-requis :
 
 - Les **2 commandes action/défaut** doivent être liées à une commande **info/binaire** qui se chargera de mémoriser l'état actuel de l'appareil.
 
->**Exemple**      
+>**Exemple**
 >![Widget ToggleLink](./images/widgets5.png)
 
->**Conseil**     
+>**Conseil**
 >Décocher la case *"Afficher"* de la commande info/binaire qui n'aura pas besoin d'être affichée.
 
 - Afin que le Core Jeedom soit en mesure d'identifier quelle commande correspond à quelle action, il est indispensable de respecter le nommage suivant pour les **2 commandes action/défaut** :
@@ -96,7 +151,7 @@ Pour se faire, il est nécessaire de prendre en compte 2 pré-requis :
     'go':'on'
 ```
 
->**Astuce**      
+>**Astuce**
 >Tant que le nom normalisé reste lisible il est possible d'adapter le nommage, par exemple *ouvrir_volet* ou *volet_fermer*, *marche_2* et *arret_2*, etc.
 
 ## Widgets personnalisés
@@ -124,7 +179,7 @@ Dans cette partie vous retrouverez l'ensemble des widgets que vous avez créés 
 
 ![Mes Widgets](./images/widgets1.png)
 
-> **Astuce**      
+> **Astuce**
 > Vous pouvez ouvrir un widget en faisant :
 > - `Clic` sur l'un d'entre eux.
 > - `Ctrl+Clic` ou `Clic+Centre` pour l'ouvrir dans un nouvel onglet du navigateur.
@@ -166,19 +221,34 @@ Il existe deux types de template :
 
 #### Remplacement
 
-C'est ce que l'on appelle un template simple, ici vous avez juste à dire que le "**ON**" correspond à telle icône/image *(à l'aide du bouton choisir)*, le "**OFF**" à telle autre icône/image, etc...      
+C'est ce que l'on appelle un template simple, ici vous avez juste à dire que le "**ON**" correspond à telle icône/image *(à l'aide du bouton choisir)*, le "**OFF**" à telle autre icône/image, etc...
 
-La case **Time widget**, si disponible, permet d'afficher la durée depuis le dernier changement d'état sous le widget.
+Les widgets Core de type remplacement disponibles sont :
+
+| Widget | Types/Sous-types |
+|--------|-----------------|
+| Template Icon | Info/Binaire, Action/Défaut, Action/Curseur |
+| Template Iconline | Info/Binaire, Action/Défaut |
+| Template Img | Info/Binaire, Action/Défaut, Action/Curseur |
+
+La case **Time widget**, si disponible, est équivalente au paramètre `time: duration` (voir [Commandes](#commandes)).
 
 Pour les template utilisant des images, il vous est proposé de paramétrer la largeur du widget en pixel en fonction du support (**Largeur desktop** & **Largeur mobile**). Des images différentes peuvent également être sélectionnées selon le thème actif de Jeedom *(light ou dark)*.
 
->**Astuce**     
->Pour les utilisateurs avancés il est possible de mettre des tags dans les valeurs de remplacement et de spécifier leur valeur dans la configuration avancée de la commande.    
+>**Astuce**
+>Pour les utilisateurs avancés il est possible de mettre des tags dans les valeurs de remplacement et de spécifier leur valeur dans la configuration avancée de la commande.
 >Si, par exemple, dans **Largeur desktop** vous mettez comme valeur `#largeur_desktop#` (**attention à bien mettre les** `#` **autour**) puis dans la configuration avancée d'une commande, onglet affichage → "**Paramètres optionnels widget**" vous ajoutez le paramètre `largeur_desktop` (**sans les** `#`) et lui donnez la valeur "**90**", ce widget personnalisé sur cette commande aura une largeur de 90 pixels. Cela permet d'adapter la taille du widget à chaque commande sans avoir à  faire un widget spécifique à chaque fois.
 
 #### Test
 
 C'est ce que l'on appelle les templates multistates *(plusieurs états)*. Au lieu de mettre une image pour le "**ON** et/ou pour le "**OFF** comme dans le cas précèdent, vous allez affecter une icône en fonction de la validation d'une condition *(test)*. Si celle-ci est vraie alors le widget affichera l'icône/l'image en question.
+
+Les widgets Core de type multistate disponibles sont :
+
+| Widget | Types/Sous-types |
+|--------|-----------------|
+| Template Multistate | Info/Numérique, Info/Autre |
+| Template Multistateline | Info/Autre |
 
 Comme précédemment, différentes images peuvent être sélectionnées en fonction du thème actif sur Jeedom et la case **Time widget** permet d'afficher la durée depuis le dernier changement d'état.
 
@@ -188,13 +258,13 @@ Les tests sont sous la forme : `#value# == 1`, `#value#` sera automatiquement re
 - `#value# >= 1 && #value# <= 5`
 - `#value# == 'toto'`
 
->**Note**     
+>**Note**
 >Il est indispensable de faire apparaitre les apostrophes (**'**) autour du texte à comparer si la valeur est un texte *(info/autre)*.
 
->**Note**     
+>**Note**
 >Pour les utilisateurs avancés, il est possible d'utiliser aussi des fonctions javascript telle que `#value#.match("^plop")`, ici on teste si le texte commence par `plop`.
 
->**Note**     
+>**Note**
 >Il est possible d'afficher la valeur de la commande dans le widget en précisant `#value#` dans le code HTML du test. Pour afficher l'unité ajoutez `#unite#`.
 
 ## Widget code
