@@ -7,21 +7,14 @@ JEEDOM_SHORT_VERSION="$(echo "$JEEDOM_VERSION" | awk -F. '{print $1"."$2}')"
 # Docker hub repository may be overriden
 REPO=${DOCKER_HUB_REPO:-"jeedom"}
 
-if [[ "${GITHUB_REF_NAME}" == "master" ]]; then
-  # select the only image for 'latest' tag
-  if [[ "${DEBIAN}" == "bookworm" && "${DATABASE}" == "0" ]]; then
-    JEEDOM_TAGS="${REPO}/jeedom:latest,${REPO}/jeedom:${JEEDOM_SHORT_VERSION}-${TAG_SUFFIX}";
-  else
-    JEEDOM_TAGS="${REPO}/jeedom:${JEEDOM_SHORT_VERSION}-${TAG_SUFFIX}"
-  fi
-  GITHUB_BRANCH=${GITHUB_REF_NAME};
-elif [[ "${GITHUB_REF_NAME}" == "beta" ]]; then
-  JEEDOM_TAGS="${REPO}/jeedom:${JEEDOM_SHORT_VERSION}-${TAG_SUFFIX}-beta"
-  GITHUB_BRANCH=${GITHUB_REF_NAME};
+# ${GITHUB_REF_NAME} == master
+# select the only image for 'latest' tag
+if [[ "${DEBIAN}" == "bookworm" && "${DATABASE}" == "0" ]]; then
+  JEEDOM_TAGS="${REPO}/jeedom:latest,${REPO}/jeedom:${JEEDOM_SHORT_VERSION}-${TAG_SUFFIX}";
 else
-  JEEDOM_TAGS="${REPO}/jeedom:${JEEDOM_SHORT_VERSION}-${TAG_SUFFIX}-alpha"
-  GITHUB_BRANCH=alpha;
+  JEEDOM_TAGS="${REPO}/jeedom:${JEEDOM_SHORT_VERSION}-${TAG_SUFFIX}"
 fi
+GITHUB_BRANCH=${GITHUB_REF_NAME};
 
 # GITHUB_OUTPUT is the output filename
 # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands#setting-an-output-parameter
