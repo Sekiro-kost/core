@@ -477,7 +477,7 @@ Et les exemples pratiques :
 
 En plus des commandes domotiques, vous avez accès aux actions suivantes :
 
-- **Pause** (sleep) : Pause de x seconde(s).
+- **Pause** (sleep) : Pause de x seconde(s). *(durée maximale: 1 heure)*
 - **variable** (variable) : Création/modification d’une variable ou de la valeur d’une variable.
 - **Supprimer variable** (delete_variable) : Permet de supprimer une variable.
 - **genericType(GENERIC, #[Object]#)** : Modification d'une commande info (event) ou action (execCmd) par Type Générique, dans un objet. Par exemple, éteindre toutes les lumières dans le Salon.
