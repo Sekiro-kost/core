@@ -1381,7 +1381,7 @@ class scenarioExpression {
 		return;
 	}
 
-	public function execute(&$scenario = null) {
+	public function execute(?scenario &$scenario = null) {
 		if ($scenario !== null && !$scenario->getDo()) {
 			return;
 		}
@@ -1479,11 +1479,9 @@ class scenarioExpression {
 						$scenario->setDo(false);
 						return;
 					}
-					die();
+					return;
 				} elseif ($this->getExpression() == 'log') {
-					if ($scenario !== null) {
-						$scenario->setLog('Log : ' . $options['message']);
-					}
+					$this->setLog($scenario, 'Log : ' . $options['message']);
 					return;
 				} elseif ($this->getExpression() == 'event') {
 					$cmd = cmd::byId(trim(str_replace('#', '', $options['cmd'])));
@@ -1551,16 +1549,13 @@ class scenarioExpression {
 					event::add('changeTheme', $options['theme']);
 					return;
 				} elseif ($this->getExpression() == 'scenario') {
-					if ($scenario !== null && $this->getOptions('scenario_id') == $scenario->getId()) {
-						$actionScenario = &$scenario;
-					} else {
-						$actionScenario = scenario::byId($this->getOptions('scenario_id'));
-					}
+					$actionScenario = scenario::byId($this->getOptions('scenario_id'));
 					if (!is_object($actionScenario)) {
 						throw new Exception($GLOBALS['JEEDOM_SCLOG_TEXT']['unfoundScenario']['txt'] . $this->getOptions('scenario_id'));
 					}
 					switch ($this->getOptions('action')) {
 						case 'start':
+						case 'startsync':
 							if ($this->getOptions('tags') != '' && !is_array($this->getOptions('tags'))) {
 								$tags = array();
 								$args = arg2array($this->getOptions('tags'));
@@ -1573,45 +1568,19 @@ class scenarioExpression {
 							if (is_array($this->getOptions('tags'))) {
 								$actionScenario->setTags($this->getOptions('tags'));
 							}
-							$this->setLog($scenario, $GLOBALS['JEEDOM_SCLOG_TEXT']['launchScenario']['txt'] . $actionScenario->getName() . ' ' . __('options :', __FILE__) . ' ' . json_encode($actionScenario->getTags()));
 							if ($scenario !== null) {
 								$actionScenario->addTag('trigger', 'scenario');
 								$actionScenario->addTag('trigger_message', $GLOBALS['JEEDOM_SCLOG_TEXT']['startByScenario']['txt'] . $scenario->getHumanName());
 								$actionScenario->addTag('trigger_name', trim($scenario->getHumanName(), '#'));
 								$actionScenario->addTag('trigger_id', $scenario->getId());
-								return $actionScenario->launch();
 							} else {
 								$actionScenario->addTag('trigger', 'other');
 								$actionScenario->addTag('trigger_message', $GLOBALS['JEEDOM_SCLOG_TEXT']['startCausedBy']['txt']);
-								return $actionScenario->launch();
 							}
-							break;
-						case 'startsync':
-							if ($this->getOptions('tags') != '' && !is_array($this->getOptions('tags'))) {
-								$tags = array();
-								$args = arg2array($this->getOptions('tags'));
-								foreach ($args as $key => $value) {
-									$value = trim($value);
-									$tags['#' . trim(trim($key), '#') . '#'] = trim(self::setTags($value, $scenario), '"');
-								}
-								$actionScenario->setTags($tags);
-							}
-							if (is_array($this->getOptions('tags'))) {
-								$actionScenario->setTags($this->getOptions('tags'));
-							}
-							$this->setLog($scenario, $GLOBALS['JEEDOM_SCLOG_TEXT']['launchScenario']['txt'] . $actionScenario->getName() . ' ' . __('options :', __FILE__) . ' ' . json_encode($actionScenario->getTags()));
-							if ($scenario !== null) {
-								$actionScenario->addTag('trigger', 'scenario');
-								$actionScenario->addTag('trigger_message', $GLOBALS['JEEDOM_SCLOG_TEXT']['startByScenario']['txt'] . $scenario->getHumanName());
-								$actionScenario->addTag('trigger_name', trim($scenario->getHumanName(), '#'));
-								$actionScenario->addTag('trigger_id', $scenario->getId());
-								return $actionScenario->launch(true);
-							} else {
-								$actionScenario->addTag('trigger', 'other');
-								$actionScenario->addTag('trigger_message', $GLOBALS['JEEDOM_SCLOG_TEXT']['startCausedBy']['txt']);
-								return $actionScenario->launch(true);
-							}
-							break;
+							$forceSync = ($this->getOptions('action') == 'startsync');
+							$launchScenarioLogKey = ($forceSync) ? 'launchScenarioSync' : 'launchScenario';
+							$this->setLog($scenario, $GLOBALS['JEEDOM_SCLOG_TEXT'][$launchScenarioLogKey]['txt'] . $actionScenario->getName() . ' ' . __('options :', __FILE__) . ' ' . json_encode($actionScenario->getTags()));
+							return $actionScenario->launch($forceSync);
 						case 'stop':
 							$this->setLog($scenario, __('Arrêt forcé du scénario :', __FILE__) . ' ' . $actionScenario->getName());
 							$actionScenario->stop();
@@ -1678,7 +1647,10 @@ class scenarioExpression {
 						$result = $options['value'];
 					}
 				} elseif ($this->getExpression() == 'delete_variable') {
-					$scenario->removeData($options['name']);
+					$dataStore = dataStore::byTypeLinkIdKey('scenario', -1, $options['name']);
+					if (is_object($dataStore)) {
+						$dataStore->remove();
+					}
 					$this->setLog($scenario, __('Suppression de la variable', __FILE__) . ' ' . $options['name']);
 					return;
 				} elseif ($this->getExpression() == 'ask') {
@@ -1737,7 +1709,8 @@ class scenarioExpression {
 						$dataStore->setValue($value);
 						$dataStore->save();
 					}
-					event::add('scenario::ask', array('scenario_id' => $scenario->getId(), 'variable' => $options['variable'], 'value' => $value));
+					// TODO: deactivate now because not used and not documented and this cause issue in case scenarion does not exist; approache for new events should be reviewed globally in a new issue
+					// event::add('scenario::ask', array('scenario_id' => $scenario->getId(), 'variable' => $options['variable'], 'value' => $value));
 					$this->setLog($scenario, __('Réponse', __FILE__) . ' ' . $value);
 					return;
 				} elseif ($this->getExpression() == 'jeedom_poweroff') {
@@ -1759,11 +1732,14 @@ class scenarioExpression {
 					jeedom::rebootSystem();
 					return;
 				} elseif ($this->getExpression() == 'scenario_return') {
-					$this->setLog($scenario, __('Demande de retour d\'information :', __FILE__) . ' ' . $options['message']);
-					if ($scenario->getReturn() === true) {
-						$scenario->setReturn($options['message']);
-					} else {
-						$scenario->setReturn($scenario->getReturn() . ' ' . $options['message']);
+					if ($scenario !== null) {
+						$this->setLog($scenario, __('Demande de retour d\'information :', __FILE__) . ' ' . $options['message']);
+						if ($scenario->getReturn() === true) {
+							$scenario->setReturn($options['message']);
+						} else {
+							$scenario->setReturn($scenario->getReturn() . ' ' . $options['message']);
+						}
+						return;
 					}
 					return;
 				} elseif ($this->getExpression() == 'remove_inat') {
@@ -1921,6 +1897,9 @@ class scenarioExpression {
 						}
 					}
 				} elseif ($this->getExpression() == 'tag') {
+					if ($scenario == null || !is_object($scenario)) {
+						return;
+					}
 					$tags = $scenario->getTags();
 					$options['value'] = self::setTags($options['value'], $scenario);
 					try {
@@ -1951,7 +1930,9 @@ class scenarioExpression {
 							}
 							$result = call_user_func_array('userFunction::' . $functionName, $arguments);
 							$this->setLog($scenario, 'userFunction: ' . $stringFunction . ' : ' . json_encode($result));
-							$scenario->persistLog();
+							if ($scenario !== null) {
+								$scenario->persistLog();
+							}
 							return;
 						}
 					}

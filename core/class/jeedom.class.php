@@ -23,7 +23,6 @@ class jeedom {
 	/*     * *************************Attributs****************************** */
 
 	private static $jeedomConfiguration;
-	private static $jeedom_encryption = null;
 	private static $cache = array();
 
 	/*     * ***********************Methode static*************************** */
@@ -533,7 +532,7 @@ class jeedom {
 		system::php($cmd);
 	}
 
-	public static function getApiKey($_plugin = 'core', $_mode = 'enable') {
+	public static function getApiKey(string $_plugin = 'core', string $_mode = 'enable') {
 		if ($_plugin == 'core') {
 			if (config::byKey('api') == '') {
 				config::save('api', config::genKey());
@@ -577,7 +576,7 @@ class jeedom {
 		return config::byKey('api', $_plugin);
 	}
 
-	public static function apiModeResult($_mode = 'enable') {
+	public static function apiModeResult(string $_mode = 'enable') {
 		if ($_mode == 'localhost' && jeedom::getHardwareName() == 'docker') {
 			$_mode = 'whiteip';
 		}
@@ -608,7 +607,7 @@ class jeedom {
 		return true;
 	}
 
-	public static function apiAccess($_apikey = '', $_plugin = 'core') {
+	public static function apiAccess(string $_apikey = '', string $_plugin = 'core') {
 		if (trim($_apikey) == '' || strlen($_apikey) < 16) {
 			return false;
 		}
@@ -658,10 +657,9 @@ class jeedom {
 	}
 
 	/*************************************************USB********************************************************/
-	public static function getUsbDetails($_usb = '', $_usbMapping = array()) {
+	public static function getUsbDetails(string $_usb = '', array $_usbMapping = []): array {
 		$vendor = '';
 		$model = '';
-		$serial = '';
 		$serial_by_id = '';
 		foreach (explode("\n", shell_exec('udevadm info --name=/dev/' . $_usb . ' --query=all')) as $line) {
 			if (strpos($line, 'E: ID_USB_MODEL=') !== false) {
@@ -712,7 +710,7 @@ class jeedom {
 		return $_usbMapping;
 	}
 
-	public static function getUsbLegacy($_usbMapping = array()) {
+	public static function getUsbLegacy(array $_usbMapping = []): array {
 		foreach (ls('/dev/', 'ttyUSB*') as $usb) {
 			$_usbMapping['/dev/' . $usb] = '/dev/' . $usb;
 		}
@@ -722,7 +720,7 @@ class jeedom {
 		return $_usbMapping;
 	}
 
-	public static function getUsbMapping($_name = '', $_getGPIO = false) {
+	public static function getUsbMapping(string $_name = '', bool $_getGPIO = false) {
 		$cache = cache::byKey('jeedom::usbMapping');
 		if (!is_json($cache->getValue()) || $_name == '') {
 			$usbMapping = array();
@@ -791,7 +789,7 @@ class jeedom {
 		return $usbMapping;
 	}
 
-	public static function getBluetoothMapping($_name = '') {
+	public static function getBluetoothMapping(string $_name = '') {
 		$cache = cache::byKey('jeedom::bluetoothMapping');
 		if (!is_json($cache->getValue()) || $_name == '') {
 			$bluetoothMapping = array();
@@ -831,7 +829,7 @@ class jeedom {
 
 	/********************************************BACKUP*****************************************************************/
 
-	public static function backup($_background = false) {
+	public static function backup(bool $_background = false) {
 		if ($_background) {
 			log::clear('backup');
 			$cmd = __DIR__ . '/../../install/backup.php';
@@ -856,7 +854,7 @@ class jeedom {
 		return $return;
 	}
 
-	public static function removeBackup($_backup) {
+	public static function removeBackup(string $_backup) {
 		if (file_exists($_backup)) {
 			unlink($_backup);
 		} else {
@@ -864,7 +862,7 @@ class jeedom {
 		}
 	}
 
-	public static function restore($_backup = '', $_background = false) {
+	public static function restore(string $_backup = '', bool $_background = false) {
 		if ($_background) {
 			log::clear('restore');
 			$cmd = __DIR__ . '/../../install/restore.php "backup=' . $_backup . '"';
@@ -879,10 +877,10 @@ class jeedom {
 
 	/****************************UPDATE*****************************************************************/
 
-	public static function update($_options = array()) {
+	public static function update(array $_options = []) {
 		log::clear('update');
 		$params = '';
-		if (is_array($_options) && count($_options) > 0) {
+		if (count($_options) > 0) {
 			foreach ($_options as $key => $value) {
 				$params .= '"' . $key . '"="' . $value . '" ';
 			}
@@ -894,7 +892,7 @@ class jeedom {
 
 	/****************************CONFIGURATION MANAGEMENT*****************************************************************/
 
-	public static function getConfiguration($_key = '', $_default = false) {
+	public static function getConfiguration(string $_key = '', bool $_default = false) {
 		global $JEEDOM_INTERNAL_CONFIG;
 		if ($_key == '') {
 			return $JEEDOM_INTERNAL_CONFIG;
@@ -920,7 +918,7 @@ class jeedom {
 		return self::$jeedomConfiguration[$_key];
 	}
 
-	private static function checkValueInconfiguration($_key, $_value) {
+	private static function checkValueInconfiguration(string $_key, $_value) {
 		if (!is_array(self::$jeedomConfiguration)) {
 			self::$jeedomConfiguration = array();
 		}
@@ -939,11 +937,14 @@ class jeedom {
 		}
 	}
 
-	public static function version() {
-		if (file_exists(__DIR__ . '/../config/version')) {
-			return trim(file_get_contents(__DIR__ . '/../config/version'));
+	public static function version(bool $_force = false) {
+		static $version = null;
+		if ($version !== null && !$_force) {
+			return $version;
 		}
-		return '';
+		$path = __DIR__ . '/../config/version';
+		$version = file_exists($path) ? trim(file_get_contents($path)) : '';
+		return $version;
 	}
 
 	/**********************START AND DATE MANAGEMENT*************************************************************/
@@ -1384,17 +1385,20 @@ class jeedom {
 
 	/***************************************THREAD MANGEMENT**********************************************/
 
-	public static function checkOngoingThread($_cmd) {
+	public static function checkOngoingThread(string $_cmd) {
 		return shell_exec('(ps ax || ps w) | grep "' . $_cmd . '$" | grep -v "grep" | wc -l');
 	}
 
-	public static function retrievePidThread($_cmd) {
+	public static function retrievePidThread(string $_cmd) {
 		return shell_exec('(ps ax || ps w) | grep "' . $_cmd . '$" | grep -v "grep" | awk \'{print $1}\'');
 	}
 
 	/******************************************UTILS******************************************************/
 
-	public static function versionAlias($_version, $_lightMode = true) {
+	/**
+	 * @param boolean $_lightMode DEPRECATED, this parameter is not used anymore and will be removed in future versions
+	 */
+	public static function versionAlias(string $_version, bool $_lightMode = true): string {
 		if ($_version == 'mview') {
 			return 'mobile';
 		}
@@ -1420,19 +1424,19 @@ class jeedom {
 		}
 	}
 
-	public static function calculStat($_calcul, $_values, $_round = 1) {
+	public static function calculStat(string $_calcul, array $_values, int $_precision = 1) {
 		switch ($_calcul) {
 			case 'sum':
-				return round(array_sum($_values), $_round);
+				return round(array_sum($_values), $_precision);
 			case 'avg':
-				return round(array_sum($_values) / count($_values), $_round);
+				return round(array_sum($_values) / count($_values), $_precision);
 			case 'text':
 				return trim(implode(',', $_values), ',');
 		}
 		return null;
 	}
 
-	public static function getTypeUse($_string = '') {
+	public static function getTypeUse(string $_string = '') {
 		$return = array('cmd' => array(), 'scenario' => array(), 'eqLogic' => array(), 'dataStore' => array(), 'plan' => array(), 'plan3d' => array(), 'view' => array());
 		preg_match_all("/#([0-9]*)#/", $_string, $matches);
 		foreach ($matches[1] as $cmd_id) {
@@ -1546,10 +1550,7 @@ class jeedom {
 		return $remove_history;
 	}
 
-	public static function massReplace($_options = array(), $_eqlogics = array(), $_cmds = array()) {
-		if (!is_array($_options) || !is_array($_eqlogics) || !is_array($_cmds)) {
-			throw new Exception('Missmatch arguments');
-		}
+	public static function massReplace(array $_options = [], array $_eqlogics = [], array $_cmds = []) {
 		if (count($_eqlogics) == 0 && count($_cmds) == 0) {
 			throw new Exception('{{Aucun équipement ou commande à remplacer ou copier}}');
 		}
@@ -1741,16 +1742,12 @@ class jeedom {
 		exec($cmd);
 	}
 
-	public static function checkSpaceLeft($_dir = null) {
-		if ($_dir == null) {
-			$path = __DIR__ . '/../../';
-		} else {
-			$path = $_dir;
-		}
+	public static function checkSpaceLeft(?string $_dir = null) {
+		$path = $_dir ?? (__DIR__ . '/../../');
 		return round(disk_free_space($path) / disk_total_space($path) * 100);
 	}
 
-	public static function getTmpFolder($_plugin = '') {
+	public static function getTmpFolder(string $_plugin = '') {
 		if (isset(self::$cache['getTmpFolder::' . $_plugin])) {
 			return self::$cache['getTmpFolder::' . $_plugin];
 		}
@@ -1815,7 +1812,7 @@ class jeedom {
 		return config::byKey('hardware_name');
 	}
 
-	public static function isCapable($_function, $_forceRefresh = false) {
+	public static function isCapable($_function, bool $_forceRefresh = false) {
 		global $JEEDOM_COMPATIBILIY_CONFIG;
 		if ($_function == 'sudo') {
 			if (!$_forceRefresh) {

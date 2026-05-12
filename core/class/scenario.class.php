@@ -415,7 +415,7 @@ class scenario {
 		if (count($scenarios) > 0) {
 			foreach ($scenarios as $scenario_) {
 				$scenario_->addTag('trigger_message',$trigger_message);
-				
+
 				$scenario_->addTag('trigger_value',$_value);
 				if (is_object($_event)) {
 					$scenario_->addTag('trigger_name',trim($_event->getHumanName(),'#'));
@@ -640,9 +640,8 @@ class scenario {
 	}
 
 	/**
-	 * @name toHumanReadable()
-	 * @param object $_input
-	 * @return string
+	 * @param string|object|array $_input
+	 * @return string|object|array
 	 */
 	public static function toHumanReadable($_input) {
 		if (is_object($_input)) {
@@ -1028,13 +1027,12 @@ class scenario {
 		return $html;
 	}
 	/**
-	 *
+	 * @deprecated don't use this function anymore, it is only here for backward compatibility
 	 */
 	public function emptyCacheWidget() {
-		
 	}
+
 	/**
-	 *
 	 * @param bool $_only_class
 	 * @return string
 	 */
@@ -1225,7 +1223,7 @@ class scenario {
 			} catch (Error $exc) {
 			}
 		}
-		
+
 		return $calculatedDate;
 	}
 
@@ -1992,7 +1990,7 @@ class scenario {
 		$this->configuration = $configuration;
 		return $this;
 	}
-	
+
 	/**
 	 * getReturn
 	 *
