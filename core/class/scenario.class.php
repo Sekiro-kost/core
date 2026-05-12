@@ -1197,8 +1197,7 @@ class scenario {
 							$calculatedDate['nextDate'] = '';
 						}
 					}
-				} catch (Exception $exc) {
-				} catch (Error $exc) {
+				} catch (\Throwable $exc) {
 				}
 				if ($calculatedDate['prevDate'] == '' || strtotime($calculatedDate['prevDate']) < strtotime($calculatedDate_tmp['prevDate'])) {
 					$calculatedDate['prevDate'] = $calculatedDate_tmp['prevDate'];
@@ -1219,8 +1218,7 @@ class scenario {
 				if(count($schedule) == 6 && $schedule[5] != $c->getNextRunDate()->format('Y')){
 					$calculatedDate['nextDate'] = '';
 				}
-			} catch (Exception $exc) {
-			} catch (Error $exc) {
+			} catch (\Throwable $exc) {
 			}
 		}
 
