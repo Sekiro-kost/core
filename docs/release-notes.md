@@ -13,6 +13,7 @@ no entries
 ## Fixes
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-05-12 15:01:09 | Fix & improvement: add safe guard in scenario in "for" loop, "wait" & "sleep" actions | [#3341](https://github.com/jeedom/core/pull/3341) |
 | 2026-05-12 10:50:34 | fix - time limit on php jeeplugin | [#3343](https://github.com/jeedom/core/pull/3343) |
 | 2026-05-12 09:39:52 | fix: remove Access-Control-Allow-Credentials with Allow-Origin: * | [#3277](https://github.com/jeedom/core/pull/3277) |
 | 2026-05-09 14:46:51 | fix: resolve TDZ ReferenceError for 'wg' in widgets.js | [#3333](https://github.com/jeedom/core/pull/3333) |
