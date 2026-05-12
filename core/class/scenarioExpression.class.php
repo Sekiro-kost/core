@@ -468,21 +468,28 @@ class scenarioExpression {
 		return round($historyStatistique['max'], $_round);
 	}
 
-	public static function wait($_condition, $_timeout = 7200) {
+	public static function wait($_condition, $_timeout = null, $_scenario = null) {
 		$result = false;
 		$occurence = 0;
-		$limit = 7200;
-		$timeout = jeedom::evaluateExpression($_timeout);
-		$limit = (is_numeric($timeout)) ? $timeout : 7200;
-		while ($result !== true) {
-			$result = jeedom::evaluateExpression($_condition);
-			if ($occurence > $limit) {
-				return 0;
+
+		$limit = (int)config::byKey('scenario::element::maxExecutionTime', 'core', 3600);
+		$timeout = is_string($_timeout) ? jeedom::evaluateExpression($_timeout, $_scenario) : $_timeout;
+
+		if (is_numeric($timeout) && $timeout > 0) {
+			$limit = min((int) $timeout, $limit);
+		}
+		if ($_scenario !== null && is_object($_scenario)) {
+			$_scenario->setLog(sprintf(__('[Wait] Début du wait, timeout: %ss', __FILE__), $limit));
+		}
+		while ($occurence < $limit) {
+			$result = jeedom::evaluateExpression($_condition, $_scenario);
+			if ($result === true) {
+				return 1;
 			}
 			$occurence++;
 			sleep(1);
 		}
-		return 1;
+		return 0;
 	}
 
 	public static function minBetween($_cmd_id, $_startDate, $_endDate, $_round = 1) {
@@ -1435,40 +1442,29 @@ class scenarioExpression {
 					if (!isset($options['condition'])) {
 						return;
 					}
-					$result = false;
-					$occurence = 0;
-					$limit = 7200;
-					if (isset($options['timeout'])) {
-						$timeout = jeedom::evaluateExpression($options['timeout']);
-						$limit = (is_numeric($timeout)) ? $timeout : 7200;
+					$result = self::wait($options['condition'], $options['timeout'], $scenario);
+					$expression = self::setTags($options['condition'], $scenario, true);
+					if ($result === 0) {
+						$this->setLog($scenario, sprintf(__('[Wait] Dépassement du timeout: %s', __FILE__), $expression));
+					} else {
+						$this->setLog($scenario, sprintf(__('[Wait] Condition valide: %s', __FILE__), $expression));
 					}
-					while (!$result) {
-						$expression = self::setTags($options['condition'], $scenario, true);
-						$result = evaluate($expression);
-						if ($occurence > $limit) {
-							$this->setLog($scenario, __('[Wait] Condition valide par dépassement de temps :', __FILE__) . ' ' . $expression . ' => ' . $result);
-							return;
-						}
-						$occurence++;
-						sleep(1);
-					}
-					$this->setLog($scenario, __('[Wait] Condition valide :', __FILE__) . ' ' . $expression . ' => ' . $result);
 					return;
 				} elseif ($this->getExpression() == 'sleep') {
 					if (isset($options['duration'])) {
 						try {
-							$options['duration'] = floatval(evaluate($options['duration']));
-						} catch (Exception $e) {
-						} catch (Error $e) {
-						}
-						if ((is_float($options['duration']) || is_int($options['duration'])) && $options['duration'] > 0) {
-							$this->setLog($scenario, __('Pause de', __FILE__) . ' ' . $options['duration'] . ' ' . __('seconde(s)', __FILE__));
-							if ($options['duration'] < 1) {
-								usleep($options['duration'] * 1000000);
+							$duration = floatval(jeedom::evaluateExpression($options['duration'], $scenario));
+							if ($duration > 0) {
+								$seconds = min($duration, (int)config::byKey('scenario::element::maxExecutionTime', 'core', 3600));
+								$this->setLog($scenario, sprintf(__('Pause de %s seconde(s)', __FILE__), $seconds));
+								if ($seconds < 1) {
+									usleep((int) round($seconds * 1000000));
+									return;
+								}
+								sleep((int) floor($seconds));
 								return;
 							}
-							sleep($options['duration']);
-							return;
+						} catch (\Throwable $e) {
 						}
 					}
 					$this->setLog($scenario, $GLOBALS['JEEDOM_SCLOG_TEXT']['invalidDuration']['txt'] . $options['duration']);
