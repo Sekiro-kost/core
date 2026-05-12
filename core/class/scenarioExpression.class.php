@@ -468,13 +468,19 @@ class scenarioExpression {
 		return round($historyStatistique['max'], $_round);
 	}
 
-	public static function wait($_condition, $_timeout = 7200, $_scenario = null) {
+	public static function wait($_condition, $_timeout = null, $_scenario = null) {
 		$result = false;
 		$occurence = 0;
-		$limit = 7200;
-		$timeout = jeedom::evaluateExpression($_timeout, $_scenario);
-		$limit = is_numeric($timeout) ? min($timeout, 7200) : 7200;
 
+		$limit = (int)config::byKey('scenario::element::maxExecutionTime', 'core', 3600);
+		$timeout = is_string($_timeout) ? jeedom::evaluateExpression($_timeout, $_scenario) : $_timeout;
+
+		if (is_numeric($timeout) && $timeout > 0) {
+			$limit = min((int) $timeout, $limit);
+		}
+		if ($_scenario !== null && is_object($_scenario)) {
+			$_scenario->setLog(sprintf(__('[Wait] Début du wait, timeout: %ss', __FILE__), $limit));
+		}
 		while ($occurence < $limit) {
 			$result = jeedom::evaluateExpression($_condition, $_scenario);
 			if ($result === true) {
@@ -1436,14 +1442,10 @@ class scenarioExpression {
 					if (!isset($options['condition'])) {
 						return;
 					}
-					$limit = $options['timeout'] ?? 7200;
-
-					$result = self::wait($options['condition'], $limit, $scenario);
+					$result = self::wait($options['condition'], $options['timeout'], $scenario);
 					$expression = self::setTags($options['condition'], $scenario, true);
 					if ($result === 0) {
-						$limitWithTags = self::setTags($limit, $scenario, true);
-						$resultLimit = evaluate($limitWithTags);
-						$this->setLog($scenario, sprintf(__('[Wait] Dépassement de limite: %s => %s - condition: %s', __FILE__), $limitWithTags, $resultLimit, $expression));
+						$this->setLog($scenario, sprintf(__('[Wait] Dépassement du timeout: %s', __FILE__), $expression));
 					} else {
 						$this->setLog($scenario, sprintf(__('[Wait] Condition valide: %s', __FILE__), $expression));
 					}
@@ -1453,7 +1455,7 @@ class scenarioExpression {
 						try {
 							$duration = floatval(jeedom::evaluateExpression($options['duration'], $scenario));
 							if ($duration > 0) {
-								$seconds = min((float)$duration, 3600);
+								$seconds = min($duration, (int)config::byKey('scenario::element::maxExecutionTime', 'core', 3600));
 								$this->setLog($scenario, sprintf(__('Pause de %s seconde(s)', __FILE__), $seconds));
 								if ($seconds < 1) {
 									usleep((int) round($seconds * 1000000));

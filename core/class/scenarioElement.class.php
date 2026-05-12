@@ -202,7 +202,7 @@ class scenarioElement {
 			if (!is_numeric($limits)) {
 				throw new Exception(__('La condition pour une boucle doit être numérique :', __FILE__) . ' ' . $limits);
 			}
-			$endTime = time() + 3600;
+			$endTime = time() + (int)config::byKey('scenario::element::maxExecutionTime', 'core', 3600);
 			$return = false;
 			for ($i = 1; $i <= $limits; $i++) {
 				$return = $this->getSubElement('do')->execute($_scenario);
@@ -232,7 +232,7 @@ class scenarioElement {
 				message::add('scenario', $message, $action, $logicalId);
 				return;
 			}
-			$endTime = time() + 3600;
+			$endTime = time() + (int)config::byKey('scenario::element::maxExecutionTime', 'core', 3600);
 			$return = false;
 			while ($result) {
 				$return = $this->getSubElement('do')->execute($_scenario);
