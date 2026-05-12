@@ -13,6 +13,7 @@ no entries
 ## Fixes
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-05-12 10:50:34 | fix - time limit on php jeeplugin | [#3343](https://github.com/jeedom/core/pull/3343) |
 | 2026-05-12 09:39:52 | fix: remove Access-Control-Allow-Credentials with Allow-Origin: * | [#3277](https://github.com/jeedom/core/pull/3277) |
 | 2026-05-09 14:46:51 | fix: resolve TDZ ReferenceError for 'wg' in widgets.js | [#3333](https://github.com/jeedom/core/pull/3333) |
 | 2026-05-09 10:37:37 | fix: add force version update option during upgrade | [#3330](https://github.com/jeedom/core/pull/3330) |
