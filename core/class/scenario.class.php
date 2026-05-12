@@ -1867,16 +1867,12 @@ class scenario {
 			$this->_log = '';
 		}
 	}
-	/**
-	 *
-	 * @param int $_default
-	 * @return int
-	 */
-	public function getTimeout($_default = 0) {
+
+	public function getTimeout(): int {
 		return $this->timeout;
 	}
+
 	/**
-	 *
 	 * @param string|int $_timeout
 	 * @return $this
 	 */
@@ -1885,7 +1881,7 @@ class scenario {
 			$_timeout = 0;
 		}
 		$this->_changed = utils::attrChanged($this->_changed, $this->timeout, $_timeout);
-		$this->timeout = $_timeout;
+		$this->timeout = (int)$_timeout;
 		return $this;
 	}
 
