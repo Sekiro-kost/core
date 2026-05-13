@@ -56,6 +56,7 @@ no entries
 ## Documentations
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-05-13 10:00:53 | docs: refactor Core widgets  and document scenario block execution time limits | [#3345](https://github.com/jeedom/core/pull/3345) |
 | 2026-04-20 11:02:18 | Auto-generated draft of release notes / changelog in develop | [#3278](https://github.com/jeedom/core/pull/3278) |
 
 ## Developer
