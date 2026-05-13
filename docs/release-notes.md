@@ -61,6 +61,7 @@ no entries
 ## Developer
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-05-13 09:49:57 | feat: change docker image building workflow into matrix | [#3172](https://github.com/jeedom/core/pull/3172) |
 | 2026-05-09 17:30:24 | chore: translate PHPStan workflow PR body to English | [#3336](https://github.com/jeedom/core/pull/3336) |
 | 2026-05-09 07:43:23 | chore: ignore .claude settings directory | [#3329](https://github.com/jeedom/core/pull/3329) |
 | 2026-05-05 10:21:10 | Bump peter-evans/create-pull-request from 5 to 8 | [#3307](https://github.com/jeedom/core/pull/3307) |
