@@ -28,7 +28,7 @@ if (init('scenarioElement_id') != '') {
 } else {
 	try {
 		$scenario = scenario::byId(init('scenario_id'));
-	} catch (\Throwable $e) {
+	} catch (Error $e) {
 		log::add('scenario', 'error', __('Scenario  :', __FILE__) . ' ' . init('scenario_id') . '. ' . __('Erreur :', __FILE__) . ' ' . log::exception($e));
 		cache::set('scenarioCacheAttr' . init('scenario_id'), utils::setJsonAttr(cache::byKey('scenarioCacheAttr' . init('scenario_id'))->getValue(), 'state', 'error'));
 		die();
@@ -48,7 +48,14 @@ if (init('scenarioElement_id') != '') {
 			}
 		}
 		$scenario->execute(init('intance_id'));
-	} catch (\Throwable $e) {
+	} catch (Exception $e) {
+		log::add('scenario', 'error', __('Scenario  :', __FILE__) . ' ' . $scenario->getHumanName() . '. ' . __('Erreur :', __FILE__) . ' ' . log::exception($e));
+		$scenario->setState('error');
+		$scenario->setLog(__('Erreur :', __FILE__) . ' ' . log::exception($e));
+		$scenario->setPID('');
+		$scenario->persistLog();
+		die();
+	} catch (Error $e) {
 		log::add('scenario', 'error', __('Scenario  :', __FILE__) . ' ' . $scenario->getHumanName() . '. ' . __('Erreur :', __FILE__) . ' ' . log::exception($e));
 		$scenario->setState('error');
 		$scenario->setLog(__('Erreur :', __FILE__) . ' ' . log::exception($e));
