@@ -1336,7 +1336,11 @@ class scenario {
 	 * @param string $_mode accepted value: ['text'|'array']
 	 * @return string|array depending $_mode parameter
 	 */
-	public function export($_mode = 'text') {
+	public function export(string $_mode = 'text') {
+		if ($_mode !== 'text' && $_mode !== 'array') {
+			$_mode = 'text';
+		}
+
 		if ($_mode == 'text') {
 			$return = '';
 			$return .= '- Nom du scénario : ' . $this->getName() . "\n";
