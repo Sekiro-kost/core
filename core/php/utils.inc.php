@@ -1673,11 +1673,12 @@ function cronIsDue($_cron, $_datetime = null, $_lastlaunch = null) {
 				return true;
 			}
 		}
-	} catch (\Throwable $e) {
+	} catch (Exception $e) {
 		$evaluate = jeedom::evaluateExpression($_cron);
 		if (is_numeric($evaluate)) {
 			return ($evaluate == date('Gi'));
 		}
+	} catch (Error $e) {
 	}
 	return false;
 }
