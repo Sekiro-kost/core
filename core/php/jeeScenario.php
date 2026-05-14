@@ -55,7 +55,7 @@ if (init('scenarioElement_id') != '') {
 		$scenario->setPID('');
 		$scenario->persistLog();
 		die();
-	} catch (Error $e) {
+	}catch (Error $e) {
 		log::add('scenario', 'error', __('Scenario  :', __FILE__) . ' ' . $scenario->getHumanName() . '. ' . __('Erreur :', __FILE__) . ' ' . log::exception($e));
 		$scenario->setState('error');
 		$scenario->setLog(__('Erreur :', __FILE__) . ' ' . log::exception($e));
