@@ -13,6 +13,7 @@ no entries
 ## Fixes
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-05-18 15:41:29 | Fix jeedom update via api | [#3352](https://github.com/jeedom/core/pull/3352) |
 | 2026-05-18 15:40:15 | fix: expected type object, get string ($now) | [#3353](https://github.com/jeedom/core/pull/3353) |
 | 2026-05-18 09:22:48 | fix test expression result | [#3349](https://github.com/jeedom/core/pull/3349) |
 | 2026-05-12 15:01:09 | Fix & improvement: add safe guard in scenario in "for" loop, "wait" & "sleep" actions | [#3341](https://github.com/jeedom/core/pull/3341) |
