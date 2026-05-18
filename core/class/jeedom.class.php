@@ -880,10 +880,8 @@ class jeedom {
 	public static function update(array $_options = []) {
 		log::clear('update');
 		$params = '';
-		if (count($_options) > 0) {
-			foreach ($_options as $key => $value) {
-				$params .= '"' . $key . '"="' . $value . '" ';
-			}
+		foreach ($_options as $key => $value) {
+			$params .= '"' . $key . '"="' . $value . '" ';
 		}
 		$cmd = __DIR__ . '/../../install/update.php ' . $params;
 		$cmd .= ' >> ' . log::getPathToLog('update') . ' 2>&1 &';
