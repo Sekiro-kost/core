@@ -40,6 +40,7 @@ no entries
 ## Others
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-05-18 14:30:21 | Refactor error handling to use \Throwable instead of Exception and Error | [#3347](https://github.com/jeedom/core/pull/3347) |
 | 2026-05-18 14:21:29 | Refactor & code Cleanup in scenario | [#3346](https://github.com/jeedom/core/pull/3346) |
 | 2026-05-12 10:37:46 | refactor(dom.ui): seen(), unseen() and toggle() use hidden class consistently | [#3342](https://github.com/jeedom/core/pull/3342) |
 | 2026-05-11 09:08:24 | Update translations for 'while' block terminology | [#3339](https://github.com/jeedom/core/pull/3339) |
