@@ -13,6 +13,9 @@ no entries
 ## Fixes
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-05-18 09:22:48 | fix test expression result | [#3349](https://github.com/jeedom/core/pull/3349) |
+| 2026-05-12 15:01:09 | Fix & improvement: add safe guard in scenario in "for" loop, "wait" & "sleep" actions | [#3341](https://github.com/jeedom/core/pull/3341) |
+| 2026-05-12 10:50:34 | fix - time limit on php jeeplugin | [#3343](https://github.com/jeedom/core/pull/3343) |
 | 2026-05-12 09:39:52 | fix: remove Access-Control-Allow-Credentials with Allow-Origin: * | [#3277](https://github.com/jeedom/core/pull/3277) |
 | 2026-05-09 14:46:51 | fix: resolve TDZ ReferenceError for 'wg' in widgets.js | [#3333](https://github.com/jeedom/core/pull/3333) |
 | 2026-05-09 10:37:37 | fix: add force version update option during upgrade | [#3330](https://github.com/jeedom/core/pull/3330) |
@@ -37,6 +40,9 @@ no entries
 ## Others
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-05-18 14:30:21 | Refactor error handling to use \Throwable instead of Exception and Error | [#3347](https://github.com/jeedom/core/pull/3347) |
+| 2026-05-18 14:21:29 | Refactor & code Cleanup in scenario | [#3346](https://github.com/jeedom/core/pull/3346) |
+| 2026-05-12 10:37:46 | refactor(dom.ui): seen(), unseen() and toggle() use hidden class consistently | [#3342](https://github.com/jeedom/core/pull/3342) |
 | 2026-05-11 09:08:24 | Update translations for 'while' block terminology | [#3339](https://github.com/jeedom/core/pull/3339) |
 | 2026-05-09 19:12:01 | Chore: secure parameter typehints | [#3317](https://github.com/jeedom/core/pull/3317) |
 | 2026-05-08 15:06:43 | refactor(desktop/js): replace var with const/let in display modules (dashboard, widgets, plan, plan3d, eqAnalyse) | [#3320](https://github.com/jeedom/core/pull/3320) |
@@ -53,11 +59,13 @@ no entries
 ## Documentations
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-05-13 10:00:53 | docs: refactor Core widgets  and document scenario block execution time limits | [#3345](https://github.com/jeedom/core/pull/3345) |
 | 2026-04-20 11:02:18 | Auto-generated draft of release notes / changelog in develop | [#3278](https://github.com/jeedom/core/pull/3278) |
 
 ## Developer
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-05-13 09:49:57 | feat: change docker image building workflow into matrix | [#3172](https://github.com/jeedom/core/pull/3172) |
 | 2026-05-09 17:30:24 | chore: translate PHPStan workflow PR body to English | [#3336](https://github.com/jeedom/core/pull/3336) |
 | 2026-05-09 07:43:23 | chore: ignore .claude settings directory | [#3329](https://github.com/jeedom/core/pull/3329) |
 | 2026-05-05 10:21:10 | Bump peter-evans/create-pull-request from 5 to 8 | [#3307](https://github.com/jeedom/core/pull/3307) |

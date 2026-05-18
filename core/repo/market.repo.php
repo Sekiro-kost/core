@@ -202,11 +202,7 @@ class repo_market {
 	public static function deleteObjet($_update) {
 		try {
 			$market = repo_market::byLogicalIdAndType($_update->getLogicalId(), $_update->getType());
-		} catch (Exception $e) {
-			$market = new repo_market();
-			$market->setLogicalId($_update->getLogicalId());
-			$market->setType($_update->getType());
-		} catch (Error $e) {
+		} catch (\Throwable $e) {
 			$market = new repo_market();
 			$market->setLogicalId($_update->getLogicalId());
 			$market->setType($_update->getType());
@@ -215,8 +211,7 @@ class repo_market {
 			if (is_object($market)) {
 				$market->remove();
 			}
-		} catch (Exception $e) {
-		} catch (Error $e) {
+		} catch (\Throwable $e) {
 		}
 	}
 
@@ -520,10 +515,7 @@ class repo_market {
 					} else {
 						$return['status'] = 'ok';
 					}
-				} catch (Exception $e) {
-					log::add('market', 'debug', __('Erreur repo_market::getinfo :', __FILE__) . ' ' . $e->getMessage());
-					$return['status'] = 'ok';
-				} catch (Error $e) {
+				} catch (\Throwable $e) {
 					log::add('market', 'debug', __('Erreur repo_market::getinfo :', __FILE__) . ' ' . $e->getMessage());
 					$return['status'] = 'ok';
 				}
@@ -571,10 +563,7 @@ class repo_market {
 					$return['status'] = 'ok';
 				}
 			}
-		} catch (Exception $e) {
-			log::add('market', 'debug', __('Erreur repo_market::getinfo :', __FILE__) . ' ' . $e->getMessage());
-			$return['status'] = 'ok';
-		} catch (Error $e) {
+		} catch (\Throwable $e) {
 			log::add('market', 'debug', __('Erreur repo_market::getinfo :', __FILE__) . ' ' . $e->getMessage());
 			$return['status'] = 'ok';
 		}
