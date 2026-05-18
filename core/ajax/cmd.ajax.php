@@ -385,8 +385,8 @@ try {
 		}
 
 		if ($dateStart == '' && init('dateRange') != 'all') {
-			$now = date('Y-m-d');
-			$dateStart = $now->modify('- ' . init('dateRange'));
+			$now = new DateTime();
+			$dateStart = $now->modify('- ' . init('dateRange'))->format('Y-m-d');
 		}
 
 		$return['maxValue'] = '';
