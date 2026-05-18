@@ -539,7 +539,6 @@
         "Erreur sur la configuration réseau interne :": "Internal network configuration error:",
         "Erreur sur la connexion au market :": "Error connecting to the market:",
         "Erreur sur la consolidation de l\\'historique :": "Error on consolidating history:",
-        "Erreur sur la démarrage des plugins :": "Error starting plugins:",
         "Erreur sur la restauration du cache :": "Error restoring the cache:",
         "Erreur sur le démarrage des plugins :": "Error starting plugins:",
         "Erreur sur le démarrage interne de Jeedom :": "Jeedom internal startup error:",
