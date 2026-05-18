@@ -1197,8 +1197,7 @@ class scenario {
 							$calculatedDate['nextDate'] = '';
 						}
 					}
-				} catch (Exception $exc) {
-				} catch (Error $exc) {
+				} catch (\Throwable $exc) {
 				}
 				if ($calculatedDate['prevDate'] == '' || strtotime($calculatedDate['prevDate']) < strtotime($calculatedDate_tmp['prevDate'])) {
 					$calculatedDate['prevDate'] = $calculatedDate_tmp['prevDate'];
@@ -1219,8 +1218,7 @@ class scenario {
 				if(count($schedule) == 6 && $schedule[5] != $c->getNextRunDate()->format('Y')){
 					$calculatedDate['nextDate'] = '';
 				}
-			} catch (Exception $exc) {
-			} catch (Error $exc) {
+			} catch (\Throwable $exc) {
 			}
 		}
 
@@ -1338,7 +1336,11 @@ class scenario {
 	 * @param string $_mode accepted value: ['text'|'array']
 	 * @return string|array depending $_mode parameter
 	 */
-	public function export($_mode = 'text') {
+	public function export(string $_mode = 'text') {
+		if ($_mode !== 'text' && $_mode !== 'array') {
+			$_mode = 'text';
+		}
+
 		if ($_mode == 'text') {
 			$return = '';
 			$return .= '- Nom du scénario : ' . $this->getName() . "\n";
@@ -1372,6 +1374,7 @@ class scenario {
 					$return .= "    " . $export . "\n";
 				}
 			}
+			return $return;
 		}
 		if ($_mode == 'array') {
 			$return = utils::o2a($this);
@@ -1428,8 +1431,8 @@ class scenario {
 			if (isset($return['_elements'])) {
 				unset($return['_elements']);
 			}
+			return $return;
 		}
-		return $return;
 	}
 	/**
 	 *
@@ -1867,16 +1870,12 @@ class scenario {
 			$this->_log = '';
 		}
 	}
-	/**
-	 *
-	 * @param int $_default
-	 * @return int
-	 */
-	public function getTimeout($_default = 0) {
+
+	public function getTimeout(): int {
 		return $this->timeout;
 	}
+
 	/**
-	 *
 	 * @param string|int $_timeout
 	 * @return $this
 	 */
@@ -1885,7 +1884,7 @@ class scenario {
 			$_timeout = 0;
 		}
 		$this->_changed = utils::attrChanged($this->_changed, $this->timeout, $_timeout);
-		$this->timeout = $_timeout;
+		$this->timeout = (int)$_timeout;
 		return $this;
 	}
 
