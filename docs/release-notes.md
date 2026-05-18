@@ -13,6 +13,7 @@ no entries
 ## Fixes
 | Merge date | Title | PR |
 | --- | --- | --- |
+| 2026-05-18 15:40:15 | fix: expected type object, get string ($now) | [#3353](https://github.com/jeedom/core/pull/3353) |
 | 2026-05-18 09:22:48 | fix test expression result | [#3349](https://github.com/jeedom/core/pull/3349) |
 | 2026-05-12 15:01:09 | Fix & improvement: add safe guard in scenario in "for" loop, "wait" & "sleep" actions | [#3341](https://github.com/jeedom/core/pull/3341) |
 | 2026-05-12 10:50:34 | fix - time limit on php jeeplugin | [#3343](https://github.com/jeedom/core/pull/3343) |
